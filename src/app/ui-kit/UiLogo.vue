@@ -1,9 +1,10 @@
 <template>
   <figure
-    aria-label="TravelMap logo"
+    aria-label="Secura"
     class="ui-logo"
   >
-    APP LOGO
+    <UiIcon class="ui-logo__icon" name="lock" size="lg"/>
+    <h1 class="ui-logo__text">Secura</h1>
   </figure>
 </template>
 
@@ -12,11 +13,17 @@
   import Vue from 'vue';
   import { Component } from 'vue-property-decorator';
 
+  import UiIcon from '@/app/ui-kit/UiIcon.vue';
+
 
   export type UiLogoType = 'small' | 'big';
 
 
-  @Component
+  @Component({
+    components: {
+      UiIcon,
+    },
+  })
   export default class UiLogo extends Vue {
 
   }
@@ -25,8 +32,32 @@
 
 <style lang="scss" scoped>
   .ui-logo {
-    > svg {
-      height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    &__icon {
+      @include UiBorderRadius(sm);
+      @include UiPadding(xxxs);
+      background-color: UiColor(main);
+      color: UiColor(shade-100);
     }
+
+    &__text {
+      @include UiTypographyHeading1();
+
+      @include UiMediaDesktop() {
+        @include UiMargin(sm, left);
+      }
+
+      @include UiMediaMobileAndTablet() {
+        @include UiMargin(sm, right);
+      }
+    }
+
+    @include UiMediaMobileAndTablet() {
+      flex-direction: row-reverse;
+    }
+
   }
 </style>

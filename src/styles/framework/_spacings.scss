@@ -57,3 +57,7 @@ $grid-spacing-mobile: (
     }
   }
 }
+
+@function UiGridSpacing($size) {
+  @return map_get($grid-spacing, $size);
+}

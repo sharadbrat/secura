@@ -77,9 +77,7 @@
       background-position: center;
       background-repeat: no-repeat;
 
-      background-color: UiColor(shade-400);
-
-      &_mode-fit {
+      &_mode-contain {
         background-size: contain;
       }
 

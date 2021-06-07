@@ -1,6 +1,6 @@
 {
-    "name": "Vue Clean Architecute Boilerplate",
-    "short_name": "Vue Clean Architecute Boilerplate",
+    "name": "Secura",
+    "short_name": "Secura",
     "icons": [
         {
             "src": "/assets/android-chrome-192x192.png",
@@ -13,8 +13,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#FF7E47",
-    "background_color": "#FF7E47",
-    "start_url": "",
+    "theme_color": "#29b6f6",
+    "background_color": "#29b6f6",
+    "start_url": "https://secura.netlify.app",
     "display": "standalone"
 }

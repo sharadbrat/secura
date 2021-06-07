@@ -38,7 +38,7 @@
 
     private static readonly defaultButtonSize = 'md';
 
-    private static readonly defaultButtonShape = 'circled';
+    private static readonly defaultButtonShape = 'rounded';
 
     private static readonly defaultButtonWidth = 'fit';
 

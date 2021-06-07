@@ -1,4 +1,4 @@
-# Vue Clean Architecute Boilerplate
+# Secura
 
 ## Environment
 
