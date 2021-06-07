@@ -1,0 +1,9 @@
+$border-radius-sizes: (
+    "sm": 4px,
+    "md": 6px,
+    "lg": 12px,
+  ) !default;
+
+@mixin UiBorderRadius($size) {
+  border-radius: map_get($border-radius-sizes, #{$size});
+}

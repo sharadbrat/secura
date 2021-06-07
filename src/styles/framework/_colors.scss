@@ -1,0 +1,31 @@
+$colors: (
+  "positive": #81C784,
+
+  "negative-light": #F4BEB9,
+  "negative": #e25144,
+  "negative-dark": #9A1C0F,
+
+  "neutral-light": #ADD3FF,
+  "neutral": #56A4FF,
+  "neutral-dark": #2162AD,
+
+  "link": #56A4FF,
+
+  "main-light": #bcffd2,
+  "main": #75f59f,
+
+  "shade-900": #000000,
+  "shade-800": #404040,
+  "shade-700": #585858,
+  "shade-650": #B2B2B2,
+  "shade-600": #ACACAC,
+  "shade-500": #C8C8C8,
+  "shade-400": #EDEDED,
+  "shade-200": #F9FAFA,
+  "shade-100": #FFFFFF,
+) !default;
+
+
+@function UiColor($name) {
+  @return map_get($colors, #{$name});
+}

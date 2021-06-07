@@ -1,0 +1,266 @@
+<template>
+  <header class="header">
+    <div class="header__container">
+      <button
+        aria-label="Меню"
+        class="header__mobile-nav-toggler"
+        @click="handleToggleMobileNav"
+      />
+
+      <UiLogo class="header__logo"/>
+
+      <nav class="header__nav-items">
+
+        <router-link
+          v-for="item in items"
+          class="header__link"
+          active-class="header__link_is-active"
+          :to="item.url"
+          :key="item.url"
+        >
+          {{item.title}}
+        </router-link>
+
+      </nav>
+
+    </div>
+
+    <div
+      class="header__mobile-nav"
+      :class="{ 'header__mobile-nav_is-expanded': isMobileNavExpanded }"
+    >
+      <nav class="header__mobile-nav-block">
+        <button
+          class="header__mobile-nav-toggler header__mobile-nav-toggler_close"
+          aria-label="Закрыть меню"
+          @click="handleToggleMobileNav"
+        />
+
+        <router-link
+          v-for="item in items"
+          class="header__link"
+          active-class="header__link_is-active"
+          :to="item.url"
+          :key="item.url"
+          @click.native="handleToggleMobileNav"
+        >
+          {{item.title}}
+        </router-link>
+      </nav>
+    </div>
+  </header>
+</template>
+
+
+<script lang="ts">
+  import Vue from 'vue';
+  import { Component, Prop } from 'vue-property-decorator';
+
+  import UiLogo from '@/app/ui-kit/UiLogo.vue';
+
+
+  export interface NavigationItem {
+    url: string,
+    title: string,
+  }
+
+
+  @Component({
+    components: {
+      UiLogo,
+    },
+  })
+  export default class UiHeader extends Vue {
+
+    private isMobileNavExpanded: boolean = false;
+
+    @Prop() public items: NavigationItem[];
+
+    private handleToggleMobileNav() {
+      this.isMobileNavExpanded = !this.isMobileNavExpanded;
+    }
+
+  }
+</script>
+
+
+<style lang="scss" scoped>
+  .header {
+    background-color: UiColor(shade-100);
+    border-bottom: 1px solid UiColor(shade-400);
+    height: $grid-step * 20; // 80px
+
+    @include UiMediaMobile() {
+      height: $grid-step * 15; // 60px
+    }
+
+    &__container {
+      @include UiLayout();
+      display: flex;
+      align-items: center;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    &__slot {
+      display: flex;
+      flex-grow: 1;
+    }
+
+    &__logo {
+      margin-right: map_get($grid-spacing, xl);
+
+      @include UiMediaMobile() {
+        margin-right: 0;
+      }
+    }
+
+    &__nav-items {
+      flex-grow: 1;
+      display: flex;
+      height: 100%;
+
+      @include UiMediaMobile() {
+        display: none;
+      }
+    }
+
+    &__link {
+      @include UiTypographyBody1();
+      display: flex;
+      height: 100%;
+      align-items: center;
+
+      padding: 0 map_get($grid-spacing, md);
+
+      text-decoration: none;
+      color: UiColor(shade-700);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      &:active {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      &_is-active {
+        color: UiColor(main);
+      }
+
+      @include UiMediaMobile() {
+        height: $grid-step * 10;
+
+        &_account {
+          padding: 0;
+          border-radius: 100%;
+          height: $grid-step * 8;
+        }
+      }
+    }
+
+    &__account-label {
+      margin-right: map_get($grid-spacing, md);
+
+      @include UiMediaMobile() {
+        display: none;
+      }
+    }
+
+    &__account-image {
+      $image-data: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' rx='20' fill='%23ADD3FF'/%3E%3Cpath d='M19.9998 21C23.6832 21 26.6665 18.0167 26.6665 14.3334C26.6665 10.65 23.6832 7.66669 19.9998 7.66669C16.3165 7.66669 13.3332 10.65 13.3332 14.3334C13.3332 18.0167 16.3165 21 19.9998 21ZM19.9998 24.3333C15.5498 24.3333 6.6665 26.5667 6.6665 31V40H33.3332V31C33.3332 26.5667 24.4498 24.3333 19.9998 24.3333Z' fill='%2356A4FF'/%3E%3C/svg%3E%0A");
+      $size: $grid-step * 8;
+
+      width: $size;
+      height: $size;
+
+      background-image: $image-data;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 50%;
+    }
+
+    // MOBILE NAVIGATION
+
+    &__mobile-nav-toggler {
+      $image-data: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='7' y='10' width='18' height='2' rx='1' fill='%23585858'/%3E%3Crect x='7' y='20' width='18' height='2' rx='1' fill='%23585858'/%3E%3Crect x='7' y='15' width='18' height='2' rx='1' fill='%23585858'/%3E%3C/svg%3E%0A");
+      $size: $grid-step * 8;
+      width: $size;
+      height: $size;
+
+      background-image: $image-data;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      border-radius: 50%;
+
+      border: none;
+      box-shadow: none;
+      appearance: none;
+
+      cursor: pointer;
+
+      &:active {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      &_close {
+        $image-data: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18.3002 5.70997C17.9102 5.31997 17.2802 5.31997 16.8902 5.70997L12.0002 10.59L7.11022 5.69997C6.72022 5.30997 6.09021 5.30997 5.70021 5.69997C5.31021 6.08997 5.31021 6.71997 5.70021 7.10997L10.5902 12L5.70021 16.89C5.31021 17.28 5.31021 17.91 5.70021 18.3C6.09021 18.69 6.72022 18.69 7.11022 18.3L12.0002 13.41L16.8902 18.3C17.2802 18.69 17.9102 18.69 18.3002 18.3C18.6902 17.91 18.6902 17.28 18.3002 16.89L13.4102 12L18.3002 7.10997C18.6802 6.72997 18.6802 6.08997 18.3002 5.70997V5.70997Z' fill='%23585858'/%3E%3C/svg%3E%0A");
+        background-image: $image-data;
+        margin-left: auto;
+        margin-bottom: map_get($grid-spacing, md);
+        margin-right: map_get($grid-spacing, md);
+      }
+
+      @include UiMediaTabletAndDesktop() {
+        display: none;
+      }
+    }
+
+    &__mobile-nav {
+
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+
+      opacity: 0;
+      visibility: hidden;
+
+      background-color: rgba(0, 0, 0, 0.3);
+
+      transition: opacity linear 100ms, visibility linear 100ms;
+
+      &_is-expanded {
+        opacity: 1;
+        visibility: visible;
+
+        .header__mobile-nav-block {
+          transform: translateX(0);
+        }
+      }
+
+      @include UiMediaTabletAndDesktop() {
+        display: none;
+      }
+    }
+
+    &__mobile-nav-block {
+      height: 100vh;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      padding: map_get($grid-spacing, md) 0;
+      background-color: UiColor(shade-100);
+
+      transform: translateX(-($grid-step * 30));
+
+      transition: transform ease-out 300ms;
+    }
+  }
+</style>

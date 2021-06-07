@@ -1,0 +1,34 @@
+
+.ui-hide {
+  display: none !important;
+
+  &_mobile {
+    @include UiMediaMobile() {
+      display: none !important;
+    }
+  }
+
+  &_tablet {
+    @include UiMediaTablet() {
+      display: none !important;
+    }
+  }
+
+  &_tablet-down {
+    @include UiMediaMobileAndTablet() {
+      display: none !important;
+    }
+  }
+
+  &_tablet-up {
+    @include UiMediaTabletAndDesktop() {
+      display: none !important;
+    }
+  }
+
+  &_desktop {
+    @include UiMediaDesktop() {
+      display: none !important;
+    }
+  }
+}

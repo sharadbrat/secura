@@ -1,0 +1,17 @@
+[
+  {
+    "path": "dist/js/*.js",
+    "limit": "150 KB",
+    "name": "js"
+  },
+  {
+    "path": "dist/index.html",
+    "limit": "1 KB",
+    "name": "html"
+  },
+  {
+    "path": "dist/css/*.css",
+    "limit": "40 KB",
+    "name": "css"
+  }
+]

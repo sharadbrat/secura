@@ -1,0 +1,112 @@
+$_input-height: $grid-step * 13;
+$_input-icon-size: $grid-step * 6;
+$_input-icon-margin: map_get($grid-spacing, md);
+$_input-icon-margin-mobile: map_get($grid-spacing-mobile, md);
+
+@mixin UiLayout (
+  $desktop-padding: map_get($grid-spacing, md),
+  $mobile-padding: map_get($grid-spacing-mobile, md),
+  $max-width: $content-max-width,
+) {
+  flex-shrink: 0;
+  flex-grow: 1;
+  padding: 0 $desktop-padding;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+
+  @if ($max-width != null) {
+    max-width: $max-width;
+  }
+
+  @include UiMediaMobile  {
+    padding: 0 $mobile-padding;
+  }
+}
+
+// adds standart input behavior
+@mixin UiInputAppearance($height: $_input-height) {
+  @include UiTypographyParagraph();
+  @include UiBorderRadius(sm);
+  @include UiPadding(md, left);
+  @include UiPadding(md, right);
+
+  height: $height;
+  width: 100%;
+
+  border: 1px solid UiColor(shade-400);
+  background-color: UiColor(background-primary);
+  color: UiColor(shade-700);
+
+  &::placeholder, ::placeholder {
+    @include UiTypographyParagraph();
+    color: UiColor(shade-600);
+  }
+
+}
+
+// adds standart button behavior
+@mixin UiButtonStates($is-darken) {
+  $overlay-color: UiColor(shade-100) !default;
+
+  @if ($is-darken) {
+    $overlay-color: UiColor(shade-700);
+  }
+
+  &::after {
+    background-color: $overlay-color;
+  }
+
+  &:focus {
+    &::after {
+      opacity: 0.15;
+    }
+  }
+
+  &:hover {
+    &::after {
+      opacity: 0.15;
+    }
+  }
+
+  &:active {
+    &::after {
+      opacity: 0.30;
+    }
+  }
+}
+
+// resets default button styles, like borders, appearance, and so on
+@mixin UiButtonAppearance() {
+  position: relative;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background-color: transparent;
+
+  color: inherit;
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &::after {
+      display: none;
+    }
+  }
+
+
+  &::after {
+    content: '';
+    position: absolute;
+    display: block;
+    pointer-events: none;
+
+    // negotiate the border width
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    opacity: 0;
+    border-radius: inherit;
+
+    top: -1px;
+    left: -1px;
+  }
+}

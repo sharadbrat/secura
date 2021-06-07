@@ -1,0 +1,56 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "plugins": [
+    "unused-imports"
+  ],
+  "extends": [
+    "plugin:vue/essential",
+    "plugin:import/typescript",
+    "@vue/airbnb",
+    "@vue/typescript"
+  ],
+  "rules": {
+    // default esslint rules
+    "class-methods-use-this": 0,
+    "no-return-assign": 0,
+    "no-useless-constructor": 0,
+    "max-len": ["error", { "code": 120, "ignoreStrings": true, "ignoreUrls": true }],
+    "no-empty-function": ["error", { "allow": ["constructors"]}],
+    "no-underscore-dangle": 0,
+    "padded-blocks": ["error", { "classes": "always" }],
+    "lines-between-class-members": ["error", "always"],
+    "arrow-parens": ["error", "as-needed"],
+
+    // import plugin
+    "import/prefer-default-export": 0,
+    "import/no-default-export": 1,
+    "import/no-unresolved": 1,
+
+    "unused-imports/no-unused-imports-ts": 2,
+
+
+    // typescript
+    "@typescript-eslint/explicit-member-accessibility": ["error"],
+
+    // vue files
+    "vue/script-indent": ["error", 2, { "baseIndent": 1 }],
+    "vue/html-indent": ["error", 2, { "baseIndent": 1 }]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.vue"
+      ],
+      "rules": {
+        "indent": "off",
+        "import/no-default-export": 0
+      }
+    }
+  ],
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser"
+  }
+}

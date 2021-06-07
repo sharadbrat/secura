@@ -1,0 +1,59 @@
+$grid-step: 4px !default;
+
+$content-max-width: $grid-step * 258 !default; // 1032px
+
+$content-max-width-medium: $grid-step * 180 !default; // 720px
+
+$content-max-width-small: $grid-step * 140 !default; // 560px
+
+$grid-spacing: (
+  "xxxs": $grid-step,  // 4
+  "xxs": $grid-step * 2,  // 8
+  "xs": $grid-step * 3, // 12
+  "sm": $grid-step * 4, // 16
+  "md": $grid-step * 6, // 24
+  "lg": $grid-step * 10, // 40
+  "xl": $grid-step * 15, // 60
+) !default;
+
+$grid-spacing-mobile: (
+  "xxxs": $grid-step,  // 4
+  "xxs": $grid-step, // 4
+  "xs": $grid-step * 2, // 8
+  "sm": $grid-step * 3, // 12
+  "md": $grid-step * 4, // 16
+  "lg": $grid-step * 6, // 24
+  "xl": $grid-step * 10, // 40
+) !default;
+
+@mixin UiPadding($size, $side: null, $include-mobile: true) {
+  $property-name: padding;
+
+  @if ($side) {
+    $property-name: padding-#{$side};
+  }
+
+  #{$property-name}: map_get($grid-spacing, $size);
+
+  @if ($include-mobile) {
+    @include UiMediaMobile() {
+      #{$property-name}: map_get($grid-spacing-mobile, $size);
+    }
+  }
+}
+
+@mixin UiMargin($size, $side: null, $include-mobile: true) {
+  $property-name: margin;
+
+  @if ($side) {
+    $property-name: margin-#{$side};
+  }
+
+  #{$property-name}: map_get($grid-spacing, $size);
+
+  @if ($include-mobile) {
+    @include UiMediaMobile() {
+      #{$property-name}: map_get($grid-spacing-mobile, $size);
+    }
+  }
+}

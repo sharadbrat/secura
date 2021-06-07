@@ -1,0 +1,8 @@
+$transitions: (
+  "bounce": cubic-bezier(.35, 1, 0.5, 1.25),
+  "default": ease-in-out,
+) !default;
+
+@function UiTransition($name: 'default') {
+  @return map_get($transitions, #{$name});
+}

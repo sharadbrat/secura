@@ -1,0 +1,62 @@
+$media-small-screen: 600px !default;
+$media-small-screen-up: 601px !default;
+$media-medium-screen: 992px !default;
+$media-medium-screen-up: 993px !default;
+$media-large-screen: 1200px !default;
+$media-large-screen-up: 1201px !default;
+
+$media-vertical-small-screen: 400px !default;
+$media-vertical-small-screen-up: 401px !default;
+$media-vertical-medium-screen: 660px !default;
+$media-vertical-medium-screen-up: 661px !default;
+$media-vertical-large-screen: 800px !default;
+$media-vertical-large-screen-up: 801px !default;
+
+
+@mixin UiMediaMobile() {
+  @media screen and (max-width: #{$media-small-screen}) {
+    @content;
+  }
+}
+
+
+@mixin UiMediaMobileAndTablet {
+  @media screen and (max-width: #{$media-medium-screen}) {
+    @content;
+  }
+}
+
+
+@mixin UiMediaTablet {
+  @media screen and (min-width: #{$media-small-screen-up}) and (max-width: #{$media-medium-screen}) {
+    @content;
+  }
+}
+
+
+@mixin UiMediaTabletAndDesktop {
+  @media screen and (min-width: #{$media-small-screen-up}) {
+    @content;
+  }
+}
+
+
+@mixin UiMediaDesktop {
+  @media screen and (min-width: #{$media-medium-screen-up}) {
+    @content;
+  }
+}
+
+
+@mixin UiMediaVerticalMobile() {
+  @media screen and (max-height: #{$media-small-screen * 2/3}) {
+    @content;
+  }
+}
+
+
+@mixin UiMediaVerticalMobileAndTablet {
+  @media screen and (max-height: #{$media-vertical-medium-screen}) {
+    @content;
+  }
+}
