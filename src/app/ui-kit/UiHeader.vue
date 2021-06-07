@@ -1,13 +1,15 @@
 <template>
   <header class="header">
     <div class="header__container">
+
+      <UiLogo class="header__logo"/>
+
       <button
+        v-if="items && items.length > 0"
         aria-label="Меню"
         class="header__mobile-nav-toggler"
         @click="handleToggleMobileNav"
       />
-
-      <UiLogo class="header__logo"/>
 
       <nav class="header__nav-items">
 
@@ -26,6 +28,7 @@
     </div>
 
     <div
+      v-if="items && items.length > 0"
       class="header__mobile-nav"
       :class="{ 'header__mobile-nav_is-expanded': isMobileNavExpanded }"
     >

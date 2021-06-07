@@ -20,15 +20,6 @@ import { TrackerService } from '@/core/service/tracker/tracker.service';
 import { UserRepository } from '@/core/repository/user/user.repository';
 import { UserRepositoryHttpImpl } from '@/core/repository/user/user-http.repository';
 
-import { AuthenticatedRouteGuard } from '@/core/service/guard/authenticated-route.guard';
-import { UnauthenticatedRouteGuard } from '@/core/service/guard/unauthenticated-route.guard';
-
-import { RegisterUseCase } from '@/core/use-case/user/register.use-case';
-import { LoginUseCase } from '@/core/use-case/user/login.use-case';
-import { ForgotPasswordUseCase } from '@/core/use-case/user/forgot-password.use-case';
-import { OauthUseCase } from '@/core/use-case/user/oauth.use-case';
-import { MeUseCase } from '@/core/use-case/user/me.use-case';
-
 
 export const IOC_CONTAINER_CONFIG_DEV: IocContainerConfig = {
   units: [
@@ -45,15 +36,6 @@ export const IOC_CONTAINER_CONFIG_DEV: IocContainerConfig = {
     // data repositories
     { identifier: UserRepository, implementer: UserRepositoryHttpImpl },
 
-    // guards
-    { identifier: AuthenticatedRouteGuard, implementer: AuthenticatedRouteGuard },
-    { identifier: UnauthenticatedRouteGuard, implementer: UnauthenticatedRouteGuard },
-
     // use cases
-    { identifier: MeUseCase, implementer: MeUseCase },
-    { identifier: LoginUseCase, implementer: LoginUseCase },
-    { identifier: RegisterUseCase, implementer: RegisterUseCase },
-    { identifier: ForgotPasswordUseCase, implementer: ForgotPasswordUseCase },
-    { identifier: OauthUseCase, implementer: OauthUseCase },
   ],
 };

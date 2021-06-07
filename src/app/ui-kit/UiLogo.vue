@@ -45,18 +45,7 @@
 
     &__text {
       @include UiTypographyHeading1();
-
-      @include UiMediaDesktop() {
-        @include UiMargin(sm, left);
-      }
-
-      @include UiMediaMobileAndTablet() {
-        @include UiMargin(sm, right);
-      }
-    }
-
-    @include UiMediaMobileAndTablet() {
-      flex-direction: row-reverse;
+      @include UiMargin(sm, left);
     }
 
   }

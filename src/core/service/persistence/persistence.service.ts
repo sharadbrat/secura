@@ -2,8 +2,6 @@ import { injectable } from 'inversify';
 
 
 export enum PersistenceServiceValueName {
-  TOKEN = 'token',
-  AFTER_LOGIN_URL = 'after_login_url',
 }
 
 

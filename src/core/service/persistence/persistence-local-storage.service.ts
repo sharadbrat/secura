@@ -8,7 +8,7 @@ import { PersistenceService, PersistenceServiceValueName } from '@/core/service/
  */
 export class PersistenceServiceLocalStorageImpl extends PersistenceService {
 
-  private STORAGE_NAMESPACE = '[vue-clean-architecture-boilerplate]';
+  private STORAGE_NAMESPACE = '[secura]';
 
   public storeValue(valueName: PersistenceServiceValueName, value: string): boolean {
     if (!window.localStorage) {

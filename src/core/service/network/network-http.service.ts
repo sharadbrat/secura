@@ -30,9 +30,6 @@ export class NetworkServiceHttpImpl extends NetworkService {
     this.axios = axios.create({
       baseURL: this.environment.base,
     });
-
-    this.axios.interceptors.response.use(null, this.unauthorizedResponseInterceptor);
-    this.axios.interceptors.request.use(this.tokenRequestInterceptor);
   }
 
   public get<T>(url: string, options?: NetworkRequestOptions): Promise<NetworkResponse<T>> {
@@ -59,19 +56,6 @@ export class NetworkServiceHttpImpl extends NetworkService {
     return this.axios.delete(url, options).then(response => response.data)
       .catch(error => this.handleError(error));
   }
-
-  private tokenRequestInterceptor = config => {
-    const modifiedConfig = Object.assign({}, config);
-    modifiedConfig.headers = { 'x-access-token': this.persistenceService.loadValue(PersistenceService.VALUE_NAME.TOKEN) };
-    return modifiedConfig;
-  };
-
-  private unauthorizedResponseInterceptor = error => {
-    if (this.isUnauthorizedErrorStatus(error)) {
-      this.persistenceService.clearValue(PersistenceService.VALUE_NAME.TOKEN);
-    }
-    return Promise.reject(error);
-  };
 
   private isUnauthorizedErrorStatus(error: any) {
     try {
