@@ -1,3 +1,4 @@
+import { ServiceEntity } from '@/core/entity/service';
 import { UserEntity } from '@/core/entity/user';
 
 
@@ -9,6 +10,23 @@ export interface UsersStoreModuleState {
   user: UserEntity;
 }
 
+/**
+ * @interface KeysStoreModuleState
+ * @public
+ */
+export interface KeysStoreModuleState {
+  masterKey: string;
+  isPersisted: boolean;
+}
+
+/**
+ * @interface ServicesStoreModuleState
+ * @public
+ */
+export interface ServicesStoreModuleState {
+  services: ServiceEntity[];
+}
+
 
 /**
  * @interface StoreState
@@ -16,4 +34,6 @@ export interface UsersStoreModuleState {
  */
 export interface StoreState {
   users: UsersStoreModuleState;
+  keys: KeysStoreModuleState;
+  services: ServicesStoreModuleState;
 }

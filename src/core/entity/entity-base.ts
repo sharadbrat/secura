@@ -61,3 +61,10 @@ export type CurrencyField = string;
  * @public
  */
 export type BooleanField = boolean;
+
+
+/**
+ * @type ColorField
+ * @public
+ */
+export type ColorField = string;

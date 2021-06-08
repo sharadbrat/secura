@@ -17,9 +17,18 @@ import { StoreProviderService } from '@/core/service/store-provider/store-provid
 import { VuexStoreProviderServiceImpl } from '@/core/service/store-provider/vuex-store-provider.service';
 import { GaTrackerServiceImpl } from '@/core/service/tracker/ga-tracker.service';
 import { TrackerService } from '@/core/service/tracker/tracker.service';
+import { IdbService } from '@/core/service/idb/idb.service';
+import { IdbImplService } from '@/core/service/idb/idb-impl.service';
 
 import { UserRepository } from '@/core/repository/user/user.repository';
 import { UserRepositoryHttpImpl } from '@/core/repository/user/user-http.repository';
+import { ServicesRepository } from '@/core/repository/services/services.repository';
+import { ServicesRepositoryIdbImpl } from '@/core/repository/services/services-idb.repository';
+
+import { SetMasterKeyUseCase } from '@/core/use-case/keys/set-master-key.use-case';
+import { AddServiceUseCase } from '@/core/use-case/services/add-service.use-case';
+import { RemoveServiceUseCase } from '@/core/use-case/services/remove-service.use-case';
+import { ListServicesUseCase } from '@/core/use-case/services/list-services.use-case';
 
 
 export const IOC_CONTAINER_CONFIG_PROD: IocContainerConfig = {
@@ -34,10 +43,16 @@ export const IOC_CONTAINER_CONFIG_PROD: IocContainerConfig = {
     { identifier: ConfigService, implementer: ConfigServiceEnvImpl },
     { identifier: StoreProviderService, implementer: VuexStoreProviderServiceImpl },
     { identifier: TrackerService, implementer: GaTrackerServiceImpl },
+    { identifier: IdbService, implementer: IdbImplService },
 
     // data repositories
     { identifier: UserRepository, implementer: UserRepositoryHttpImpl },
+    { identifier: ServicesRepository, implementer: ServicesRepositoryIdbImpl },
 
     // use cases
+    { identifier: SetMasterKeyUseCase, implementer: SetMasterKeyUseCase },
+    { identifier: AddServiceUseCase, implementer: AddServiceUseCase },
+    { identifier: ListServicesUseCase, implementer: ListServicesUseCase },
+    { identifier: RemoveServiceUseCase, implementer: RemoveServiceUseCase },
   ],
 };

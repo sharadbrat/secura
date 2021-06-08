@@ -58,6 +58,22 @@ $grid-spacing-mobile: (
   }
 }
 
+@mixin UiMarginNegative($size, $side: null, $include-mobile: true) {
+  $property-name: margin;
+
+  @if ($side) {
+    $property-name: margin-#{$side};
+  }
+
+  #{$property-name}: - map_get($grid-spacing, $size);
+
+  @if ($include-mobile) {
+    @include UiMediaMobile() {
+      #{$property-name}: - map_get($grid-spacing-mobile, $size);
+    }
+  }
+}
+
 @function UiGridSpacing($size) {
   @return map_get($grid-spacing, $size);
 }

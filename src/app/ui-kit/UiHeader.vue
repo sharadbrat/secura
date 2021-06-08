@@ -1,30 +1,32 @@
 <template>
   <header class="header">
-    <div class="header__container">
+    <div class="header__fixed-header">
+      <div class="header__container">
 
-      <UiLogo class="header__logo"/>
+        <UiLogo class="header__logo"/>
 
-      <button
-        v-if="items && items.length > 0"
-        aria-label="Меню"
-        class="header__mobile-nav-toggler"
-        @click="handleToggleMobileNav"
-      />
+        <button
+          v-if="items && items.length > 0"
+          aria-label="Menu"
+          class="header__mobile-nav-toggler"
+          @click="handleToggleMobileNav"
+        />
 
-      <nav class="header__nav-items">
+        <nav class="header__nav-items">
 
-        <router-link
-          v-for="item in items"
-          class="header__link"
-          active-class="header__link_is-active"
-          :to="item.url"
-          :key="item.url"
-        >
-          {{item.title}}
-        </router-link>
+          <router-link
+            v-for="item in items"
+            class="header__link"
+            active-class="header__link_is-active"
+            :to="item.url"
+            :key="item.url"
+          >
+            {{item.title}}
+          </router-link>
 
-      </nav>
+        </nav>
 
+      </div>
     </div>
 
     <div
@@ -35,7 +37,7 @@
       <nav class="header__mobile-nav-block">
         <button
           class="header__mobile-nav-toggler header__mobile-nav-toggler_close"
-          aria-label="Закрыть меню"
+          aria-label="Close menu"
           @click="handleToggleMobileNav"
         />
 
@@ -89,8 +91,6 @@
 
 <style lang="scss" scoped>
   .header {
-    background-color: UiColor(shade-100);
-    border-bottom: 1px solid UiColor(shade-400);
     height: $grid-step * 20; // 80px
     flex-shrink: 0;
 
@@ -98,12 +98,28 @@
       height: $grid-step * 15; // 60px
     }
 
+    &__fixed-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      width: 100%;
+      border-bottom: 1px solid UiColor(shade-400);
+    }
+
     &__container {
       @include UiLayout();
+
       display: flex;
       align-items: center;
-      height: 100%;
       justify-content: space-between;
+      height: $grid-step * 20; // 80px
+
+      background-color: UiColor(shade-100);
+
+      @include UiMediaMobile() {
+        height: $grid-step * 15; // 60px
+      }
     }
 
     &__slot {

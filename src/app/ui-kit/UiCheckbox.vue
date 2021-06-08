@@ -2,10 +2,13 @@
   <label class="ui-checkbox-container">
     <div
       class="ui-checkbox"
-      :class="{
-        'ui-checkbox_is-disabled': isDisabled,
-        'ui-checkbox_is-checked': valueSync,
-      }"
+      :class="[
+        {
+          'ui-checkbox_is-disabled': isDisabled,
+          'ui-checkbox_is-checked': valueSync,
+        },
+        sizeClass,
+      ]"
     >
       <input
         class="ui-checkbox__input"
@@ -14,7 +17,11 @@
         :disabled="isDisabled"
         @input="onInput($event.target.checked)"
       />
-      <UiIcon name="done" class="ui-checkbox__check-mark" />
+      <UiIcon
+        name="done"
+        class="ui-checkbox__check-mark"
+        :size="size || defaultCheckboxSize"
+      />
     </div>
 
     <span v-if="this.$slots.default" class="ui-checkbox-label">
@@ -32,6 +39,9 @@
   import UiIcon from '@/app/ui-kit/UiIcon.vue';
 
 
+  export type UiCheckboxSize = 'md' | 'sm';
+
+
   /**
    * @class UiCheckbox
    * @extends Vue
@@ -44,9 +54,19 @@
   })
   export default class UiCheckbox extends Vue {
 
+    private static readonly defaultCheckboxSize = 'md';
+
     @PropSync('value') public valueSync: boolean;
 
+    @Prop() public size?: UiCheckboxSize;
+
     @Prop() public isDisabled: boolean;
+
+
+    get sizeClass() {
+      const size = this.size || UiCheckbox.defaultCheckboxSize;
+      return `ui-checkbox_size-${size}`;
+    }
 
     @Emit('input')
     public onInput(value: boolean): boolean {
@@ -72,15 +92,12 @@
     @include UiButtonAppearance();
     @include UiButtonStates(true);
 
-    $size: $grid-step * 8;
     $transition-speed: 75ms;
 
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: $size;
-    height: $size;
     flex-shrink: 0;
 
     border: 2px solid UiColor(main-light);
@@ -105,11 +122,31 @@
       }
     }
 
+    &_size-md {
+      $size: $grid-step * 8;
+      width: $size;
+      height: $size;
+
+      .ui-checkbox__input {
+        width: $size;
+        height: $size;
+      }
+    }
+
+    &_size-sm {
+      $size: $grid-step * 6;
+      width: $size;
+      height: $size;
+
+      .ui-checkbox__input {
+        width: $size;
+        height: $size;
+      }
+    }
+
     &__input {
       position: absolute;
       z-index: -1;
-      width: $size;
-      height: $size;
       appearance: none;
     }
 

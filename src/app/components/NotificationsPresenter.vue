@@ -93,7 +93,7 @@
 
 <style scoped lang="scss">
   .notification-presenter {
-    @include UiMargin(md, top);
+    @include UiMargin(xl, top);
     @include UiLayout(
       map_get($grid-spacing, md),
       map_get($grid-spacing-mobile, md),
@@ -101,7 +101,7 @@
     );
 
     position: fixed;
-    z-index: 100;
+    z-index: 2000;
     top: 0;
     left: 50%;
     transform: translateX(-50%);

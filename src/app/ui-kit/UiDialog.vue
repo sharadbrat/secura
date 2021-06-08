@@ -29,6 +29,7 @@
         <slot name="footer">
           <UiButton
             type="secondary"
+            size="sm"
             v-if="isSecondaryButtonShown"
             :disabled="isSecondaryButtonDisabled"
             @click="onSecondaryButtonClick"
@@ -39,6 +40,7 @@
           <UiButton
             class="ui-dialog__button-primary"
             type="primary"
+            size="sm"
             v-if="isPrimaryButtonShown"
             :disabled="isPrimaryButtonDisabled"
             @click="onPrimaryButtonClick"
@@ -87,9 +89,9 @@
 
     @Prop({ default: true }) public shouldCloseOnPrimaryButtonClick?: boolean;
 
-    @Prop({ default: 'Назад' }) public secondaryButtonText?: string;
+    @Prop({ default: 'Cancel' }) public secondaryButtonText?: string;
 
-    @Prop({ default: 'Ок' }) public primaryButtonText?: string;
+    @Prop({ default: 'Ok' }) public primaryButtonText?: string;
 
     @Prop({ default: 'md' }) public size?: UiDialogSize;
 

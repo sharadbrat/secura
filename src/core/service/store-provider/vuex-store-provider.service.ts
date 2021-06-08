@@ -2,8 +2,10 @@ import Vuex, { Store } from 'vuex';
 import Vue from 'vue';
 
 import { UsersStoreModule } from '@/core/service/store-provider/modules/users.vuex';
+import { KeysStoreModule } from '@/core/service/store-provider/modules/keys.vuex';
+import { ServicesStoreModule } from '@/core/service/store-provider/modules/services.vuex';
 import { StoreProviderService } from '@/core/service/store-provider/store-provider.service';
-import { StoreState } from './store-state';
+import { StoreState } from '@/core/service/store-provider/store-state';
 
 
 /**
@@ -22,6 +24,8 @@ export class VuexStoreProviderServiceImpl extends StoreProviderService<Store<Sto
       // strict: true,
       modules: {
         users: UsersStoreModule,
+        keys: KeysStoreModule,
+        services: ServicesStoreModule,
       },
     });
   }
