@@ -15,6 +15,10 @@ export class SetMasterKeyUseCase implements UseCase {
   }
 
   public async perform(masterKey: string, isStored: boolean = false): Promise<void> {
+    if (!masterKey) {
+      throw new Error('Master key can not be falsy value!');
+    }
+
     const masterKeyHash = sha256(masterKey).toString();
 
     if (isStored) {

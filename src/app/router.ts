@@ -7,6 +7,7 @@ import { TrackerService } from '@/core/service/tracker/tracker.service';
 import PassThrough from '@/app/components/PassThrough.vue';
 
 import MainView from '@/app/views/main/MainView.vue';
+import AboutView from '@/app/views/about/AboutView.vue';
 
 export class ApplicationRouter {
 
@@ -38,6 +39,11 @@ export class ApplicationRouter {
               path: '',
               name: 'main',
               component: MainView,
+            },
+            {
+              path: 'about',
+              name: 'about',
+              component: AboutView,
             },
           ],
         },

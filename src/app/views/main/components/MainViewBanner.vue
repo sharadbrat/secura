@@ -55,26 +55,7 @@
       @primary-button-click="onDialogConfirm"
     >
       <template slot="body">
-        <div class="banner__dialog-input-row">
-          <UiInput
-            class="banner__dialog-input"
-            v-model="masterKey"
-            placeholder="Master key"
-            :type="isMasterKeyShown ? 'text' : 'password'"
-          />
-          <UiButton
-            class="banner__dialog-visibility-button"
-            size="sm"
-            shape="circled"
-            type="subdued"
-            width="shrink"
-            :disabled="!masterKey.length"
-            @click="isMasterKeyShown = !isMasterKeyShown"
-          >
-            <UiIcon v-if="!isMasterKeyShown" name="visibility"/>
-            <UiIcon v-if="isMasterKeyShown" name="visibility-off"/>
-          </UiButton>
-        </div>
+        <PasswordField v-model="masterKey"/>
 
         <UiCheckbox
           v-model="isMasterKeyStored"
@@ -115,6 +96,7 @@
   import UiInput from '@/app/ui-kit/UiInput.vue';
   import UiIcon from '@/app/ui-kit/UiIcon.vue';
   import UiCheckbox from '@/app/ui-kit/UiCheckbox.vue';
+  import PasswordField from '@/app/components/PasswordField.vue';
 
 
   @Component({
@@ -126,6 +108,7 @@
       UiInput,
       UiIcon,
       UiCheckbox,
+      PasswordField,
     },
   })
   export default class MainViewBanner extends Vue {
@@ -214,16 +197,6 @@
       min-width: $grid-step * 40;
       margin-left: auto;
       margin-right: auto;
-    }
-
-    &__dialog-input-row {
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-
-    &__dialog-visibility-button {
-      flex-shrink: 0;
     }
 
     &__dialog-input {

@@ -8,34 +8,22 @@
       <h3 class="service-list-element__heading">{{service.name}}</h3>
     </div>
     <div class="service-list-element__input-row">
-      <div class="service-list-element__input-container">
-        <UiInput
-          class="service-list-element__input"
-          readonly
-          size="sm"
-          :value="password"
-          :type="isPasswordShown ? 'text' : 'password'"
-        />
 
-        <UiButton
-          class="service-list-element__input-visibility-button"
-          size="xs"
-          shape="circled"
-          type="subdued"
-          width="shrink"
-          :disabled="!masterKey.length"
-          @click="isPasswordShown = !isPasswordShown"
-        >
-          <UiIcon v-if="!isPasswordShown" name="visibility" size="sm"/>
-          <UiIcon v-if="isPasswordShown" name="visibility-off" size="sm"/>
-        </UiButton>
-      </div>
+      <PasswordField
+        class="service-list-element__input-container"
+        readonly
+        size="sm"
+        :value="password"
+        :isDisabled="isDisabled"
+        :isShowDisabled="isShowDisabled"
+      />
 
       <UiButton
         size="sm"
         type="subdued"
         width="shrink"
         ref="copyButton"
+        :disabled="isDisabled"
       >
         <UiIcon name="copy"/>
       </UiButton>
@@ -50,6 +38,7 @@
         type="subdued"
         width="shrink"
         :disabled="!isEditable"
+        @click="onEditClick()"
       >
         <UiIcon name="edit"/>
       </UiButton>
@@ -59,7 +48,9 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component, Prop, Ref } from 'vue-property-decorator';
+  import {
+    Component, Emit, Prop, Ref,
+  } from 'vue-property-decorator';
   import ClipboardJS from 'clipboard';
 
   import { ServiceEntity } from '@/core/entity/service';
@@ -69,6 +60,7 @@
   import UiButton from '@/app/ui-kit/UiButton.vue';
   import UiInput from '@/app/ui-kit/UiInput.vue';
   import UiIcon from '@/app/ui-kit/UiIcon.vue';
+  import PasswordField from '@/app/components/PasswordField.vue';
 
 
   @Component({
@@ -78,6 +70,7 @@
       UiButton,
       UiInput,
       UiIcon,
+      PasswordField,
     },
   })
   export default class ServiceListElement extends Vue {
@@ -88,17 +81,25 @@
     @Prop()
     public masterKey: string;
 
-    @Prop()
+    @Prop({ default: false })
     public isEditable: boolean;
+
+    @Prop({ default: false })
+    public isDisabled: boolean;
+
+    @Prop({ default: false })
+    public isShowDisabled: boolean;
 
     @Ref()
     public copyButton: UiButton;
 
-    public isPasswordShown: boolean = false;
-
     private clipboardInstance: ClipboardJS;
 
     public get password(): string {
+      if (!this.masterKey) {
+        return '8800555353500000';
+      }
+
       return this.service.getPassword(this.masterKey);
     }
 
@@ -110,6 +111,11 @@
       if (this.clipboardInstance) {
         this.clipboardInstance.destroy();
       }
+    }
+
+    @Emit('edit')
+    public onEditClick(): ServiceEntity {
+      return this.service;
     }
 
   }
@@ -130,12 +136,6 @@
 
     &__input {
       max-width: $grid-step * 50; // 200px
-    }
-
-    &__input-visibility-button {
-      @include UiMargin(xxxs, right);
-      position: absolute;
-      right: 0;
     }
 
     &__input-container {
@@ -173,7 +173,6 @@
       flex-shrink: 0;
 
       &:disabled {
-        opacity: 0;
         visibility: hidden;
       }
     }

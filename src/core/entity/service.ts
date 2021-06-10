@@ -54,4 +54,13 @@ export class ServiceEntity {
     return sha256(masterKey + this.id).toString().substring(0, 16);
   }
 
+  public clone(): ServiceEntity {
+    return new ServiceEntity({
+      id: this.id,
+      color: this.color,
+      name: this.name,
+      pictureId: this.pictureId,
+    });
+  }
+
 }

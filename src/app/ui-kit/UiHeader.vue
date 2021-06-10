@@ -65,8 +65,9 @@
 
 
   export interface NavigationItem {
-    url: string,
-    title: string,
+    url: string;
+    title: string;
+    icon: string;
   }
 
 
@@ -122,11 +123,6 @@
       }
     }
 
-    &__slot {
-      display: flex;
-      flex-grow: 1;
-    }
-
     &__logo {
       margin-right: map_get($grid-spacing, xl);
 
@@ -155,6 +151,10 @@
 
       text-decoration: none;
       color: UiColor(shade-700);
+
+      @include UiMediaMobileAndTablet() {
+        height: $grid-step * 15;
+      }
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
@@ -216,7 +216,7 @@
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 100;
+      z-index: 10000;
 
       opacity: 0;
       visibility: hidden;

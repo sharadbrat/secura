@@ -30,4 +30,12 @@ export class ServicesStoreModule extends VuexModule implements ServicesStoreModu
     this.services = this.services.filter(el => el.id !== serviceId);
   }
 
+  @Mutation
+  public updateService(service: ServiceEntity) {
+    const index = this.services.findIndex(el => el.id === service.id);
+    const newServices = [...this.services];
+    newServices[index] = service;
+    this.services = newServices;
+  }
+
 }

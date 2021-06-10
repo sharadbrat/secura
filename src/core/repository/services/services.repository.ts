@@ -31,4 +31,6 @@ export abstract class ServicesRepository implements Repository<ServiceEntity, Se
 
   public abstract delete(id: ServiceEntityId): Promise<ServiceEntity>;
 
+  public abstract update(id: ServiceEntityId, model: ServiceEntity): Promise<ServiceEntity>;
+
 }

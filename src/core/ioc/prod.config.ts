@@ -29,6 +29,7 @@ import { SetMasterKeyUseCase } from '@/core/use-case/keys/set-master-key.use-cas
 import { AddServiceUseCase } from '@/core/use-case/services/add-service.use-case';
 import { RemoveServiceUseCase } from '@/core/use-case/services/remove-service.use-case';
 import { ListServicesUseCase } from '@/core/use-case/services/list-services.use-case';
+import { UpdateServiceUseCase } from '@/core/use-case/services/update-service.use-case';
 
 
 export const IOC_CONTAINER_CONFIG_PROD: IocContainerConfig = {
@@ -54,5 +55,6 @@ export const IOC_CONTAINER_CONFIG_PROD: IocContainerConfig = {
     { identifier: AddServiceUseCase, implementer: AddServiceUseCase },
     { identifier: ListServicesUseCase, implementer: ListServicesUseCase },
     { identifier: RemoveServiceUseCase, implementer: RemoveServiceUseCase },
+    { identifier: UpdateServiceUseCase, implementer: UpdateServiceUseCase },
   ],
 };

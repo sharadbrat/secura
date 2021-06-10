@@ -63,4 +63,14 @@ export class ServicesRepositoryIdbImpl extends ServicesRepository {
     return entity;
   }
 
+  public async update(id: ServiceEntityId, entity: ServiceEntity): Promise<ServiceEntity> {
+    const db = await this.idbService.db;
+    const dto = this.idbAdapter.serialize(entity);
+    await db.put(IdbObjectStores.SERVICES, dto, id);
+
+    this.store.commit('services/updateService', entity);
+
+    return entity;
+  }
+
 }

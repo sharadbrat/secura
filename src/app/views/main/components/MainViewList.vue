@@ -7,12 +7,13 @@
           v-if="services.length > 0"
           class="list__button"
           size="sm"
-          :type="isEditing ? 'primary' : 'secondary'"
           width="shrink"
           shape="circled"
+          :disabled="!masterKey"
+          :type="isEditing ? 'primary' : 'secondary'"
           @click="isEditing = !isEditing"
         >
-          <UiIcon :name="isEditing ? 'edit-off' : 'edit'"/>
+          <UiIcon name="edit"/>
         </UiButton>
         <UiButton
           class="list__button"
@@ -20,6 +21,7 @@
           type="secondary"
           width="shrink"
           shape="circled"
+          :disabled="!masterKey"
           @click="onAddButtonClick"
         >
           <UiIcon name="add"/>
@@ -27,40 +29,51 @@
       </div>
     </div>
 
-    <div class="list__container">
-      <div
-        v-for="service in services"
-        :key="service.id"
-        class="list__element"
-      >
-        <ServiceListElement
-          class="list__element-inner"
-          :service="service"
-          :masterKey="masterKey"
-          :isEditable="isEditing"
-        />
+    <div class="list__container-wrapper">
+      <div class="list__container">
+        <div
+          v-for="service in services"
+          :key="service.id"
+          class="list__element"
+        >
+          <ServiceListElement
+            class="list__element-inner"
+            :service="service"
+            :masterKey="masterKey"
+            :isEditable="isEditing"
+            :isDisabled="!masterKey"
+            :isShowDisabled="!masterKey"
+            @edit="onElementEdit(service)"
+          />
+        </div>
+      </div>
+      <div class="list__overlay" v-if="!masterKey">
+        <UiIcon class="list__overlay-icon" name="lock"/>
+        <UiButton @click="onUnlockClick()">Unlock</UiButton>
       </div>
     </div>
 
+    <ServiceElementDialog
+      ref="serviceElementDialog"
+      @confirm="onServiceDialogConfirm"
+    />
+
     <UiDialog
-      title="Add service"
-      ref="addDialog"
+      title="Enter your master key"
+      ref="keyDialog"
       :shouldCloseOnPrimaryButtonClick="false"
-      @primary-button-click="onAddDialogConfirm"
+      @primary-button-click="onKeyDialogConfirm"
     >
       <template slot="body">
-        <UiInput
-          class="list__input"
-          v-model="name"
-          placeholder="Name (i.e. google-personal-account)"
+        <PasswordField
+          class="list__dialog-input-row"
+          v-model="inputMasterKey"
         />
 
-        <UiInput
-          class="list__input list__input_color"
-          v-model="color"
-          type="color"
-          size="sm"
-        />
+        <p class="list__dialog-description">
+          Incorrect master key results in incorrectly calculated passwords for
+          your services. Make sure the master key you are entering is correct.
+        </p>
       </template>
     </UiDialog>
 
@@ -76,23 +89,29 @@
   import { NotificationService } from '@/core/service/notification/notification.service';
   import { ServiceEntity } from '@/core/entity/service';
   import { AddServiceUseCase } from '@/core/use-case/services/add-service.use-case';
+  import { UpdateServiceUseCase } from '@/core/use-case/services/update-service.use-case';
+  import { SetMasterKeyUseCase } from '@/core/use-case/keys/set-master-key.use-case';
 
   import UiCard from '@/app/ui-kit/UiCard.vue';
   import UiButton from '@/app/ui-kit/UiButton.vue';
-  import UiDialog from '@/app/ui-kit/UiDialog.vue';
   import UiInput from '@/app/ui-kit/UiInput.vue';
   import UiIcon from '@/app/ui-kit/UiIcon.vue';
+  import UiDialog from '@/app/ui-kit/UiDialog.vue';
   import ServiceListElement from '@/app/views/main/components/ServiceListElement.vue';
+  import ServiceElementDialog from '@/app/views/main/components/ServiceElementDialog.vue';
+  import PasswordField from '@/app/components/PasswordField.vue';
 
 
   @Component({
     components: {
       UiCard,
       UiButton,
-      UiDialog,
       UiInput,
       UiIcon,
+      UiDialog,
       ServiceListElement,
+      ServiceElementDialog,
+      PasswordField,
     },
   })
   export default class MainViewList extends Vue {
@@ -103,6 +122,12 @@
     @LazyInject(AddServiceUseCase)
     public addServiceUseCase: AddServiceUseCase;
 
+    @LazyInject(UpdateServiceUseCase)
+    public updateServiceUseCase: UpdateServiceUseCase;
+
+    @LazyInject(SetMasterKeyUseCase)
+    public setMasterKeyUseCase: SetMasterKeyUseCase;
+
     @State(state => state.services.services)
     public services: ServiceEntity[];
 
@@ -110,29 +135,39 @@
     public masterKey: string;
 
     @Ref()
-    public addDialog: UiDialog;
+    public serviceElementDialog: ServiceElementDialog;
 
-    public name: string = '';
-
-    public color: string = '#4db6ac';
+    @Ref()
+    public keyDialog: UiDialog;
 
     public isEditing: boolean = false;
 
+    public inputMasterKey: string = '';
+
     public onAddButtonClick() {
-      this.addDialog.show();
+      this.serviceElementDialog.show();
     }
 
-    public async onAddDialogConfirm() {
-      const service = new ServiceEntity({
-        id: null,
-        pictureId: null,
-        name: this.name,
-        color: this.color,
-      });
+    public async onServiceDialogConfirm(params: { isEditing: boolean, entity: ServiceEntity }) {
+      if (params.isEditing) {
+        this.updateServiceUseCase.perform(params.entity);
+        return;
+      }
 
-      await this.addServiceUseCase.perform(service);
+      this.addServiceUseCase.perform(params.entity);
+    }
 
-      this.addDialog.hide();
+    public onElementEdit(service: ServiceEntity) {
+      this.serviceElementDialog.show(service);
+    }
+
+    public onUnlockClick() {
+      this.keyDialog.show();
+    }
+
+    public onKeyDialogConfirm() {
+      this.setMasterKeyUseCase.perform(this.inputMasterKey);
+      this.keyDialog.hide();
     }
 
   }
@@ -187,6 +222,46 @@
 
     &__button {
       @include UiMargin(sm, left)
+    }
+
+    &__overlay {
+      $outer-space: $grid-step * 2;
+      @include UiPadding(lg, top);
+      @include UiBorderRadius(sm);
+      position: absolute;
+      left: - $outer-space;
+      top: - $outer-space;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: calc(100% + #{$outer-space * 2});
+      height: calc(100% + #{$outer-space * 2});
+
+      background-color: rgba(0,0,0, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    &__container-wrapper {
+      position: relative;
+    }
+
+    &__overlay-icon {
+      @include UiMargin(md, bottom);
+      background-color: UiColor(shade-100);
+      @include UiPadding(sm);
+      $size: $grid-step * 20;
+      width: $size;
+      height: $size;
+      border-radius: $size / 2;
+    }
+
+    &__dialog-description {
+      @include UiPadding(xs);
+      @include UiMargin(sm, top);
+      @include UiBorderRadius(sm);
+      background-color: UiColor(neutral-light);
+      color: UiColor(neutral-dark);
     }
 
   }

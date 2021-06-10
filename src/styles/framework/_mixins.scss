@@ -57,13 +57,7 @@ $_input-icon-margin-mobile: map_get($grid-spacing-mobile, md);
     background-color: $overlay-color;
   }
 
-  &:focus {
-    &::after {
-      opacity: 0.15;
-    }
-  }
-
-  &:hover {
+  &:focus-visible {
     &::after {
       opacity: 0.15;
     }

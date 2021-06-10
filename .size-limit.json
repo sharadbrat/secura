@@ -1,7 +1,7 @@
 [
   {
     "path": "dist/js/*.js",
-    "limit": "150 KB",
+    "limit": "300 KB",
     "name": "js"
   },
   {

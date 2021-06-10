@@ -1,7 +1,7 @@
 <template>
   <div class="top-level-layout">
 
-    <UiHeader :title="title"/>
+    <UiHeader :title="title" :items="navItems"/>
 
     <main class="top-level-layout__main">
       <slot></slot>
@@ -13,7 +13,7 @@
   import Vue from 'vue';
   import { Component, Prop } from 'vue-property-decorator';
 
-  import UiHeader from '@/app/ui-kit/UiHeader.vue';
+  import UiHeader, { NavigationItem } from '@/app/ui-kit/UiHeader.vue';
 
 
   @Component({
@@ -24,6 +24,16 @@
   export default class TopLevelLayout extends Vue {
 
     @Prop() public title: string;
+
+    public get navItems(): NavigationItem[] {
+      return [
+        {
+          url: 'about',
+          title: 'About',
+          icon: null,
+        },
+      ];
+    }
 
   }
 </script>
