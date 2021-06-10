@@ -4,6 +4,7 @@
       :value="password"
       @input="$emit('input', $event)"
       class="password-field__input"
+      placeholder="Something really secret"
       :isBlock="true"
       :readonly="readonly"
       :size="size"

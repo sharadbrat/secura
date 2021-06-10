@@ -1,3 +1,4 @@
+import { ImageEntity } from '@/core/entity/image';
 import { ServiceEntity } from '@/core/entity/service';
 import { UserEntity } from '@/core/entity/user';
 
@@ -20,6 +21,14 @@ export interface KeysStoreModuleState {
 }
 
 /**
+ * @interface ImagesStoreModuleState
+ * @public
+ */
+export interface ImagesStoreModuleState {
+  images: ImageEntity[];
+}
+
+/**
  * @interface ServicesStoreModuleState
  * @public
  */
@@ -36,4 +45,5 @@ export interface StoreState {
   users: UsersStoreModuleState;
   keys: KeysStoreModuleState;
   services: ServicesStoreModuleState;
+  images: ImagesStoreModuleState;
 }

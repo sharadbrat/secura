@@ -16,6 +16,7 @@
   import { ErrorTrackerService } from '@/core/service/error-tracker/error-tracker.service';
   import { StoreProviderService } from '@/core/service/store-provider/store-provider.service';
   import { ListServicesUseCase } from '@/core/use-case/services/list-services.use-case';
+  import { ListImagesUseCase } from '@/core/use-case/images/list-images.use-case';
   import { PersistenceService, PersistenceServiceValueName } from '@/core/service/persistence/persistence.service';
 
   import UiIconsDefinition from '@/app/ui-kit/UiIconsDefinition.vue';
@@ -39,6 +40,9 @@
     @LazyInject(ListServicesUseCase)
     public listServicesUseCase: ListServicesUseCase;
 
+    @LazyInject(ListImagesUseCase)
+    public listImagesUseCase: ListImagesUseCase;
+
     @LazyInject(PersistenceService)
     public persistenceService: PersistenceService;
 
@@ -47,6 +51,7 @@
       this.loadPersistedMasterKey();
       this.printVersion();
       this.listServicesUseCase.perform();
+      this.listImagesUseCase.perform();
     }
 
     public printVersion() {

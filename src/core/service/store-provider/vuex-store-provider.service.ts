@@ -5,6 +5,7 @@ import { UsersStoreModule } from '@/core/service/store-provider/modules/users.vu
 import { KeysStoreModule } from '@/core/service/store-provider/modules/keys.vuex';
 import { ServicesStoreModule } from '@/core/service/store-provider/modules/services.vuex';
 import { StoreProviderService } from '@/core/service/store-provider/store-provider.service';
+import { ImagesStoreModule } from '@/core/service/store-provider/modules/images.vuex';
 import { StoreState } from '@/core/service/store-provider/store-state';
 
 
@@ -26,6 +27,7 @@ export class VuexStoreProviderServiceImpl extends StoreProviderService<Store<Sto
         users: UsersStoreModule,
         keys: KeysStoreModule,
         services: ServicesStoreModule,
+        images: ImagesStoreModule,
       },
     });
   }

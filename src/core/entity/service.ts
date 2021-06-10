@@ -1,6 +1,7 @@
 import sha256 from 'crypto-js/sha256';
 
 import { ColorField, NameField } from '@/core/entity/entity-base';
+import { ImageEntityId } from '@/core/entity/image';
 
 
 /**
@@ -25,7 +26,7 @@ export interface ServiceEntityConstructorParams {
   id: ServiceEntityId;
   name: NameField;
   color: ColorField;
-  pictureId: PictureId;
+  pictureId: ImageEntityId;
 }
 
 
@@ -41,7 +42,7 @@ export class ServiceEntity {
 
   public name: NameField;
 
-  public pictureId: PictureId;
+  public pictureId: ImageEntityId;
 
   public constructor(params: ServiceEntityConstructorParams) {
     this.id = params.id;

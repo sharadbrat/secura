@@ -4,7 +4,13 @@
     :style="{ 'border-left-color': service.color }"
   >
     <div class="service-list-element__heading-row">
-      <UiResponsiveImage class="service-list-element__image"/>
+      <div class="service-list-element__image-container">
+        <UiResponsiveImage
+          class="service-list-element__image"
+          mode="contain"
+          :src="imageUrl"
+        />
+      </div>
       <h3 class="service-list-element__heading">{{service.name}}</h3>
       <UiButton
         class="service-list-element__delete-button"
@@ -63,8 +69,10 @@
     Component, Emit, Prop, Ref,
   } from 'vue-property-decorator';
   import ClipboardJS from 'clipboard';
+  import { Getter } from 'vuex-class';
 
   import { ServiceEntity } from '@/core/entity/service';
+  import { ImageEntity, ImageEntityId } from '@/core/entity/image';
 
   import UiCard from '@/app/ui-kit/UiCard.vue';
   import UiResponsiveImage from '@/app/ui-kit/UiResponsiveImage.vue';
@@ -103,6 +111,16 @@
 
     @Ref()
     public copyButton: UiButton;
+
+    @Getter('images/getById')
+    public getImageById: (id: ImageEntityId) => ImageEntity;
+
+    public get imageUrl(): string {
+      if (!this.service.pictureId) {
+        return null;
+      }
+      return this.getImageById(this.service.pictureId).url;
+    }
 
     private clipboardInstance: ClipboardJS;
 
@@ -211,12 +229,23 @@
     }
 
     &__image {
-      @include UiMargin(xs, right);
       $size: $grid-step * 8;
+      width: $size;
+      height: $size;
+    }
+
+    &__image-container {
+      @include UiMargin(xs, right);
+      $size: $grid-step * 12;
       width: $size;
       height: $size;
       border-radius: $size / 2;
       flex-shrink: 0;
+      overflow: hidden;
+      background-color: UiColor(shade-400);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     @keyframes ServiceElementFadeIn {

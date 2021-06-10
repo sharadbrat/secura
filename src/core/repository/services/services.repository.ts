@@ -17,7 +17,7 @@ export interface UserEntityDTO {
 
 
 /**
- * @class UserRepository
+ * @class ServicesRepository
  * @implements Repository<ServiceEntity, ServiceEntityId>
  * @abstract
  * @public

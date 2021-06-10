@@ -24,12 +24,15 @@ import { UserRepository } from '@/core/repository/user/user.repository';
 import { UserRepositoryHttpImpl } from '@/core/repository/user/user-http.repository';
 import { ServicesRepository } from '@/core/repository/services/services.repository';
 import { ServicesRepositoryIdbImpl } from '@/core/repository/services/services-idb.repository';
+import { ImageRepository } from '@/core/repository/image/image.repository';
+import { ImageRepositoryInMemoryImpl } from '@/core/repository/image/image-in-memory.repository';
 
 import { SetMasterKeyUseCase } from '@/core/use-case/keys/set-master-key.use-case';
 import { AddServiceUseCase } from '@/core/use-case/services/add-service.use-case';
 import { RemoveServiceUseCase } from '@/core/use-case/services/remove-service.use-case';
 import { ListServicesUseCase } from '@/core/use-case/services/list-services.use-case';
 import { UpdateServiceUseCase } from '@/core/use-case/services/update-service.use-case';
+import { ListImagesUseCase } from '@/core/use-case/images/list-images.use-case';
 
 
 export const IOC_CONTAINER_CONFIG_PROD: IocContainerConfig = {
@@ -49,6 +52,7 @@ export const IOC_CONTAINER_CONFIG_PROD: IocContainerConfig = {
     // data repositories
     { identifier: UserRepository, implementer: UserRepositoryHttpImpl },
     { identifier: ServicesRepository, implementer: ServicesRepositoryIdbImpl },
+    { identifier: ImageRepository, implementer: ImageRepositoryInMemoryImpl },
 
     // use cases
     { identifier: SetMasterKeyUseCase, implementer: SetMasterKeyUseCase },
@@ -56,5 +60,6 @@ export const IOC_CONTAINER_CONFIG_PROD: IocContainerConfig = {
     { identifier: ListServicesUseCase, implementer: ListServicesUseCase },
     { identifier: RemoveServiceUseCase, implementer: RemoveServiceUseCase },
     { identifier: UpdateServiceUseCase, implementer: UpdateServiceUseCase },
+    { identifier: ListImagesUseCase, implementer: ListImagesUseCase },
   ],
 };

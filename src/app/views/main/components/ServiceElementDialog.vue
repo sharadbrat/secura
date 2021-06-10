@@ -1,35 +1,52 @@
 <template>
-  <UiDialog
-    class="service-element-dialog"
-    :title="title"
-    ref="dialog"
-    :shouldCloseOnPrimaryButtonClick="false"
-    @primary-button-click="onConfirm"
-  >
-    <template slot="body">
-      <div></div>
-      <div v-if="service">
-
+  <div>
+    <UiDialog
+      class="service-element-dialog"
+      :title="title"
+      ref="dialog"
+      :shouldCloseOnPrimaryButtonClick="false"
+      @primary-button-click="onConfirm"
+    >
+      <template slot="body">
         <div class="service-element-dialog__input">
           <span id="name-label" class="service-element-dialog__input-label">Service name</span>
           <UiInput
+            v-if="service"
             aria-labelledby="name-label"
             class="list__input"
             v-model="service.name"
             placeholder="Name (i.e. google-personal-account)"
           />
         </div>
+        <div class="service-element-dialog__input">
+          <span id="icon-label" class="service-element-dialog__input-label">Icon</span>
+          <UiButton
+            class="service-element-dialog__image-button"
+            type="secondary"
+            width="shrink"
+            shape="circled"
+            aria-labelledby="icon-label"
+            ref="imageSelectButton"
+          >
+            <UiResponsiveImage
+              v-if="selectedImage"
+              class="service-element-dialog__image"
+              :src="selectedImage.url"
+            />
+          </UiButton>
+        </div>
 
         <div class="service-element-dialog__input">
-          <span id="color-label" class="service-element-dialog__input-label">Color</span>
+          <span id="color-label" class="service-element-dialog__input-label">Label</span>
           <UiInput
+            v-if="service"
             aria-labelledby="color-label"
             class="service-element-dialog__input-color"
             v-model="service.color"
             type="color"
             size="sm"
           />
-          <div class="service-element-dialog__input-color-container">
+          <div class="service-element-dialog__input-color-container" v-if="service">
             <UiButton
               class="service-element-dialog__input-color-button"
               type="subdued"
@@ -46,25 +63,71 @@
             </UiButton>
           </div>
         </div>
+      </template>
+    </UiDialog>
 
+    <UiMenu
+      v-if="imageSelectButtonEl"
+      class="service-element-dialog__image-menu"
+      ref="imageMenu"
+      :triggerElement="imageSelectButtonEl"
+    >
+      <span class="service-element-dialog__image-menu-heading">Logo</span>
+
+      <div class="service-element-dialog__image-menu-list">
+        <UiButton
+          v-for="image in logos"
+          :key="image.id"
+          class="service-element-dialog__image-button"
+          type="transparent"
+          width="shrink"
+          shape="circled"
+          @click="onImageSelect(image)"
+        >
+          <UiResponsiveImage
+            class="service-element-dialog__image"
+            :src="image.url"
+          />
+        </UiButton>
       </div>
-    </template>
-  </UiDialog>
+
+      <span class="service-element-dialog__image-menu-heading">Emoji</span>
+      <div class="service-element-dialog__image-menu-list">
+        <UiButton
+          v-for="image in emojis"
+          :key="image.id"
+          class="service-element-dialog__image-button"
+          type="transparent"
+          width="shrink"
+          shape="circled"
+          @click="onImageSelect(image)"
+        >
+          <UiResponsiveImage
+            class="service-element-dialog__image"
+            :src="image.url"
+          />
+        </UiButton>
+      </div>
+    </UiMenu>
+  </div>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
   import { Component, Emit, Ref } from 'vue-property-decorator';
+  import { Getter } from 'vuex-class';
 
   import { LazyInject } from '@/core/ioc';
   import { NotificationService } from '@/core/service/notification/notification.service';
   import { ServiceEntity } from '@/core/entity/service';
   import { randomInArray } from '@/core/utils/random';
+  import { ImageEntity } from '@/core/entity/image';
 
   import UiButton from '@/app/ui-kit/UiButton.vue';
   import UiDialog from '@/app/ui-kit/UiDialog.vue';
   import UiInput from '@/app/ui-kit/UiInput.vue';
-  import UiSwitchButton from '@/app/ui-kit/UiSwitchButton.vue';
+  import UiResponsiveImage from '@/app/ui-kit/UiResponsiveImage.vue';
+  import UiMenu from '@/app/ui-kit/UiMenu.vue';
 
 
   const colors = [
@@ -93,7 +156,8 @@
       UiButton,
       UiDialog,
       UiInput,
-      UiSwitchButton,
+      UiResponsiveImage,
+      UiMenu,
     },
   })
   export default class ServiceElementDialog extends Vue {
@@ -104,11 +168,31 @@
 
     private readonly colors = colors;
 
+    @Getter('images/emojis')
+    public emojis: ImageEntity[];
+
+    @Getter('images/logos')
+    public logos: ImageEntity[];
+
+    public selectedImage: ImageEntity = null;
+
     @LazyInject(NotificationService)
     private notificationService: NotificationService;
 
     @Ref()
     public dialog: UiDialog;
+
+    @Ref()
+    public imageMenu: UiMenu;
+
+    @Ref()
+    public imageSelectButton: UiButton;
+
+    public imageSelectButtonEl: HTMLButtonElement = null;
+
+    mounted() {
+      this.imageSelectButtonEl = this.imageSelectButton.$el as HTMLButtonElement;
+    }
 
     public get title(): string {
       return this.isEditing ? 'Edit service' : 'Add service';
@@ -140,15 +224,22 @@
         this.service = service.clone();
         this.isEditing = true;
       } else {
+        this.selectedImage = randomInArray(this.emojis);
         this.service = new ServiceEntity({
           id: null,
           color: randomInArray(this.colors),
           name: '',
-          pictureId: null,
+          pictureId: this.selectedImage.id,
         });
       }
 
       this.dialog.show();
+    }
+
+    public onImageSelect(image: ImageEntity) {
+      this.selectedImage = image;
+      this.service.pictureId = this.selectedImage.id;
+      this.imageMenu.close();
     }
 
   }
@@ -188,5 +279,26 @@
       grid-template-columns: repeat(8, 1fr);
       width: fit-content;
     }
+
+    &__image {
+      $size: $grid-step * 6;
+      width: $size;
+      height: $size;
+    }
+
+    &__image-menu {
+      @include UiPadding(xs);
+      max-height: 100%;
+      max-width: $grid-step * 80;
+      overflow: auto;
+      z-index: 100000;
+    }
+
+    &__image-menu-heading {
+      @include UiTypographyBody2();
+      @include UiMargin(sm, bottom);
+      @include UiPadding(sm, top);
+    }
+
   }
 </style>
