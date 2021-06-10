@@ -8,6 +8,7 @@ import PassThrough from '@/app/components/PassThrough.vue';
 
 import MainView from '@/app/views/main/MainView.vue';
 import AboutView from '@/app/views/about/AboutView.vue';
+import SettingsView from '@/app/views/settings/SettingsView.vue';
 
 export class ApplicationRouter {
 
@@ -39,6 +40,11 @@ export class ApplicationRouter {
               path: '',
               name: 'main',
               component: MainView,
+            },
+            {
+              path: 'settings',
+              name: 'settings',
+              component: SettingsView,
             },
             {
               path: 'about',

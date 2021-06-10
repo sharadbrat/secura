@@ -28,6 +28,11 @@
     public get navItems(): NavigationItem[] {
       return [
         {
+          url: 'settings',
+          title: 'Settings',
+          icon: null,
+        },
+        {
           url: 'about',
           title: 'About',
           icon: null,

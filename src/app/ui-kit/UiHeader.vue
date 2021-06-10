@@ -135,6 +135,7 @@
       flex-grow: 1;
       display: flex;
       height: 100%;
+      justify-content: flex-end;
 
       @include UiMediaMobileAndTablet() {
         display: none;
