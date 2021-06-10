@@ -12,6 +12,9 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component, Prop } from 'vue-property-decorator';
+  import { State } from 'vuex-class';
+
+  import { ServiceEntity } from '@/core/entity/service';
 
   import UiHeader, { NavigationItem } from '@/app/ui-kit/UiHeader.vue';
 
@@ -25,7 +28,21 @@
 
     @Prop() public title: string;
 
+    @State(state => state.keys.masterKey)
+    public masterKey: string;
+
+    @State(state => state.services.services)
+    public services: ServiceEntity[];
+
+    public get isNavDisplayed(): boolean {
+      return Boolean(this.masterKey || this.services.length > 0);
+    }
+
     public get navItems(): NavigationItem[] {
+      if (!this.isNavDisplayed) {
+        return [];
+      }
+
       return [
         {
           url: 'settings',

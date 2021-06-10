@@ -6,6 +6,17 @@
     <div class="service-list-element__heading-row">
       <UiResponsiveImage class="service-list-element__image"/>
       <h3 class="service-list-element__heading">{{service.name}}</h3>
+      <UiButton
+        class="service-list-element__delete-button"
+        size="sm"
+        shape="circled"
+        type="subdued"
+        width="shrink"
+        :disabled="!isEditable"
+        @click="onDeleteClick()"
+      >
+        <UiIcon name="delete"/>
+      </UiButton>
     </div>
     <div class="service-list-element__input-row">
 
@@ -30,7 +41,7 @@
     </div>
 
     <div class="service-list-element__bottom-row">
-      <span class="service-list-element__id">{{service.id}}</span>
+      <span class="service-list-element__id">ID: {{service.id}}</span>
       <UiButton
         class="service-list-element__edit-button"
         size="sm"
@@ -118,6 +129,11 @@
       return this.service;
     }
 
+    @Emit('delete')
+    public onDeleteClick(): ServiceEntity {
+      return this.service;
+    }
+
   }
 </script>
 
@@ -152,8 +168,9 @@
     }
 
     &__heading {
-      @include UiTypographyHeading4();
+      @include UiTypographyBody1();
       word-break: break-word;
+      flex-grow: 1;
     }
 
     &__id {
@@ -163,13 +180,23 @@
     }
 
     &__heading-row {
-      @include UiMargin(sm, bottom);
+      @include UiMargin(xs, bottom);
       display: flex;
-      align-items: center
+      align-items: center;
+      justify-content: space-between;
     }
 
     &__edit-button {
-      @include UiMargin(xs, left);
+      @include UiMargin(xxs, left);
+      flex-shrink: 0;
+
+      &:disabled {
+        visibility: hidden;
+      }
+    }
+
+    &__delete-button {
+      @include UiMargin(xxs, left);
       flex-shrink: 0;
 
       &:disabled {
@@ -184,8 +211,8 @@
     }
 
     &__image {
-      @include UiMargin(xxs, right);
-      $size: $grid-step * 15;
+      @include UiMargin(xs, right);
+      $size: $grid-step * 8;
       width: $size;
       height: $size;
       border-radius: $size / 2;

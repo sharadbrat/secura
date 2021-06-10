@@ -3,7 +3,7 @@
 
     <div class="about-view">
 
-      <h2 class="about-view__heading">Secura - headless password manager</h2>
+      <h2 class="about-view__heading">Secura is a headless password manager</h2>
 
       <p class="about-view__paragraph">
         Installable web app that stores your services and derives passwords for

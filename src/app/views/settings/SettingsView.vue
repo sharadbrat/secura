@@ -157,7 +157,7 @@
 
     &__danger-zone {
       @include UiBorderRadius(md);
-      @include UiPadding(sm);
+      @include UiPadding(md);
       border: 1px solid UiColor(negative-light);
     }
 

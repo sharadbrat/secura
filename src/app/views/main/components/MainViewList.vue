@@ -4,12 +4,11 @@
       <h2 class="list__heading">Saved services</h2>
       <div>
         <UiButton
-          v-if="services.length > 0"
+          v-if="services.length > 0 && masterKey"
           class="list__button"
           size="sm"
           width="shrink"
           shape="circled"
-          :disabled="!masterKey"
           :type="isEditing ? 'primary' : 'secondary'"
           @click="isEditing = !isEditing"
         >
@@ -44,6 +43,7 @@
             :isDisabled="!masterKey"
             :isShowDisabled="!masterKey"
             @edit="onElementEdit(service)"
+            @delete="onElementDelete(service)"
           />
         </div>
       </div>
@@ -59,10 +59,19 @@
     />
 
     <UiDialog
+      :title="`Delete ${deletingServiceName} service?`"
+      text="This action is irreversible."
+      ref="deleteDialog"
+      @primary-button-click="onDeleteConfirm()"
+    >
+
+    </UiDialog>
+
+    <UiDialog
       title="Enter your master key"
       ref="keyDialog"
       :shouldCloseOnPrimaryButtonClick="false"
-      @primary-button-click="onKeyDialogConfirm"
+      @primary-button-click="onKeyDialogConfirm()"
     >
       <template slot="body">
         <PasswordField
@@ -91,6 +100,7 @@
   import { AddServiceUseCase } from '@/core/use-case/services/add-service.use-case';
   import { UpdateServiceUseCase } from '@/core/use-case/services/update-service.use-case';
   import { SetMasterKeyUseCase } from '@/core/use-case/keys/set-master-key.use-case';
+  import { RemoveServiceUseCase } from '@/core/use-case/services/remove-service.use-case';
 
   import UiCard from '@/app/ui-kit/UiCard.vue';
   import UiButton from '@/app/ui-kit/UiButton.vue';
@@ -125,6 +135,9 @@
     @LazyInject(UpdateServiceUseCase)
     public updateServiceUseCase: UpdateServiceUseCase;
 
+    @LazyInject(RemoveServiceUseCase)
+    public removeServiceUseCase: RemoveServiceUseCase;
+
     @LazyInject(SetMasterKeyUseCase)
     public setMasterKeyUseCase: SetMasterKeyUseCase;
 
@@ -138,11 +151,24 @@
     public serviceElementDialog: ServiceElementDialog;
 
     @Ref()
+    public deleteDialog: UiDialog;
+
+    @Ref()
     public keyDialog: UiDialog;
 
     public isEditing: boolean = false;
 
     public inputMasterKey: string = '';
+
+    private deletingService: ServiceEntity = null;
+
+    public get deletingServiceName(): string {
+      if (!this.deletingService) {
+        return '""';
+      }
+
+      return `"${this.deletingService.name}"`;
+    }
 
     public onAddButtonClick() {
       this.serviceElementDialog.show();
@@ -159,6 +185,15 @@
 
     public onElementEdit(service: ServiceEntity) {
       this.serviceElementDialog.show(service);
+    }
+
+    public onElementDelete(service: ServiceEntity) {
+      this.deletingService = service;
+      this.deleteDialog.show();
+    }
+
+    public onDeleteConfirm() {
+      this.removeServiceUseCase.perform(this.deletingService.id);
     }
 
     public onUnlockClick() {
@@ -226,7 +261,7 @@
 
     &__overlay {
       $outer-space: $grid-step * 2;
-      @include UiPadding(lg, top);
+      @include UiPadding(md);
       @include UiBorderRadius(sm);
       position: absolute;
       left: - $outer-space;
@@ -248,8 +283,8 @@
 
     &__overlay-icon {
       @include UiMargin(md, bottom);
-      background-color: UiColor(shade-100);
       @include UiPadding(sm);
+      background-color: UiColor(shade-100);
       $size: $grid-step * 20;
       width: $size;
       height: $size;

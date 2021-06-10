@@ -129,6 +129,7 @@
 
     @Emit()
     public confirm(entity: ServiceEntity): { isEditing: boolean, entity: ServiceEntity } {
+      this.service = null;
       return { isEditing: this.isEditing, entity };
     }
 
