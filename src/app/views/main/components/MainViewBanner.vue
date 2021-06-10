@@ -48,35 +48,7 @@
       Try it out now!
     </UiButton>
 
-    <UiDialog
-      title="Setup master key"
-      ref="keyDialog"
-      :shouldCloseOnPrimaryButtonClick="false"
-      @primary-button-click="onDialogConfirm"
-    >
-      <template slot="body">
-        <PasswordField v-model="masterKey"/>
-
-        <UiCheckbox
-          v-model="isMasterKeyStored"
-          class="banner__dialog-checkbox"
-          size="sm"
-        >
-          Store master key in local storage.
-        </UiCheckbox>
-
-        <p class="banner__dialog-description">
-          A master key is used to derive passwords for the services you want to
-          authenticate in. By default, it is not stored in the system and it is
-          deleted when you close Secura. If you want to, you can activate
-          storing the master key in local storage by clicking on the checkbox
-          above. In this case, please note that if an adversary gets access to
-          your device - they can easily use your master key to generate your
-          passwords.
-        </p>
-      </template>
-    </UiDialog>
-
+    <SetupMasterKeyDialog ref="keyDialog" @confirm="onDialogConfirm"/>
 
   </div>
 </template>
@@ -86,17 +58,13 @@
   import { Component, Ref } from 'vue-property-decorator';
 
   import { LazyInject } from '@/core/ioc';
-  import { NotificationService } from '@/core/service/notification/notification.service';
   import { SetMasterKeyUseCase } from '@/core/use-case/keys/set-master-key.use-case';
 
   import UiCard from '@/app/ui-kit/UiCard.vue';
   import UiResponsiveImage from '@/app/ui-kit/UiResponsiveImage.vue';
   import UiButton from '@/app/ui-kit/UiButton.vue';
-  import UiDialog from '@/app/ui-kit/UiDialog.vue';
-  import UiInput from '@/app/ui-kit/UiInput.vue';
   import UiIcon from '@/app/ui-kit/UiIcon.vue';
-  import UiCheckbox from '@/app/ui-kit/UiCheckbox.vue';
-  import PasswordField from '@/app/components/PasswordField.vue';
+  import SetupMasterKeyDialog from '@/app/components/SetupMasterKeyDialog.vue';
 
 
   @Component({
@@ -104,42 +72,24 @@
       UiCard,
       UiResponsiveImage,
       UiButton,
-      UiDialog,
-      UiInput,
       UiIcon,
-      UiCheckbox,
-      PasswordField,
+      SetupMasterKeyDialog,
     },
   })
   export default class MainViewBanner extends Vue {
-
-    @LazyInject(NotificationService)
-    public notificationService: NotificationService;
 
     @LazyInject(SetMasterKeyUseCase)
     public setMasterKeyUseCase: SetMasterKeyUseCase;
 
     @Ref()
-    public keyDialog: UiDialog;
-
-    public masterKey: string = '';
-
-    public isMasterKeyShown: boolean = false;
-
-    public isMasterKeyStored: boolean = false;
+    public keyDialog: SetupMasterKeyDialog;
 
     public onTryButtonClick() {
       this.keyDialog.show();
     }
 
-    public onDialogConfirm() {
-      if (!this.masterKey.length) {
-        this.notificationService.show({ text: 'Master key can not be empty!', type: 'error' });
-        return;
-      }
-
-      this.setMasterKeyUseCase.perform(this.masterKey, this.isMasterKeyStored);
-
+    public onDialogConfirm(params: { key: string, isPersisted: boolean }) {
+      this.setMasterKeyUseCase.perform(params.key, params.isPersisted);
       this.keyDialog.hide();
     }
 
@@ -197,23 +147,6 @@
       min-width: $grid-step * 40;
       margin-left: auto;
       margin-right: auto;
-    }
-
-    &__dialog-input {
-      @include UiMargin(xxs, right);
-      flex-grow: 1;
-    }
-
-    &__dialog-checkbox {
-      @include UiMargin(xs, top);
-    }
-
-    &__dialog-description {
-      @include UiPadding(xs);
-      @include UiMargin(sm, top);
-      @include UiBorderRadius(sm);
-      background-color: UiColor(neutral-light);
-      color: UiColor(neutral-dark);
     }
 
   }

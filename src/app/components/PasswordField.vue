@@ -4,6 +4,7 @@
       :value="password"
       @input="$emit('input', $event)"
       class="password-field__input"
+      :isBlock="true"
       :readonly="readonly"
       :size="size"
       :type="isPasswordShown ? 'text' : 'password'"
@@ -77,7 +78,7 @@
     width: fit-content;
 
     &__input {
-      max-width: $grid-step * 50; // 200px
+      @include UiPadding(xl, right);
     }
 
     &__button {
