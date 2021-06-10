@@ -6,6 +6,7 @@ html {
 
 html, body, #app {
   height: 100%;
+  overscroll-behavior-y: none;
 }
 
 a:not(.ui-link-reset) {
