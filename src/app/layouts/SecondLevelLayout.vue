@@ -74,6 +74,7 @@
       @include UiMargin(lg, top);
       @include UiMargin(lg, bottom);
       @include UiLayout();
+      @include UiPadding(lg, bottom);
 
       flex-grow: 1;
     }

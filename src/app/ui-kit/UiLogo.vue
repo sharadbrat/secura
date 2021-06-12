@@ -4,14 +4,14 @@
     class="ui-logo"
   >
     <UiIcon class="ui-logo__icon" name="lock" size="lg"/>
-    <h1 class="ui-logo__text">Secura</h1>
+    <component :is="tag" class="ui-logo__text">Secura</component>
   </figure>
 </template>
 
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component } from 'vue-property-decorator';
+  import { Component, Prop } from 'vue-property-decorator';
 
   import UiIcon from '@/app/ui-kit/UiIcon.vue';
 
@@ -25,6 +25,9 @@
     },
   })
   export default class UiLogo extends Vue {
+
+    @Prop({ default: 'h1' })
+    public tag: string;
 
   }
 </script>
