@@ -50,6 +50,7 @@
             class="settings-view__import-button"
             size="sm"
             type="secondary"
+            :disabled="!hasServices"
             @click="onExportClick()"
           >
             <UiIcon class="settings-view__import-icon" name="upload"/>
@@ -71,6 +72,7 @@
             class="settings-view__delete"
             size="sm"
             type="secondary"
+            :disabled="!hasServices"
             @click="onDeleteServicesClick()"
           >
             <UiIcon class="settings-view__delete-icon" name="delete"/>
@@ -164,6 +166,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component, Ref } from 'vue-property-decorator';
+  import { State } from 'vuex-class';
 
   import { LazyInject } from '@/core/ioc';
   import { SetMasterKeyUseCase } from '@/core/use-case/keys/set-master-key.use-case';
@@ -229,6 +232,9 @@
 
     @Ref()
     public upload: HTMLInputElement;
+
+    @State(state => state.services.services.length > 0)
+    public hasServices: boolean;
 
     public importEncryptionKey: string = '';
 

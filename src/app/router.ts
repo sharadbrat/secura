@@ -73,6 +73,8 @@ export class ApplicationRouter {
     }
 
     this.tracker.pageView(to.name);
+    // scroll to the top
+    document.body.scrollIntoView();
   }
 
 }

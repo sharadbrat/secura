@@ -6,7 +6,7 @@
     @primary-button-click="onConfirm"
   >
     <template slot="body">
-      <PasswordField ref="passwordField" v-model="masterKey"/>
+      <PasswordField ref="passwordField" v-model="masterKey" @confirm="onConfirm"/>
 
       <UiCheckbox
         v-model="isMasterKeyStored"

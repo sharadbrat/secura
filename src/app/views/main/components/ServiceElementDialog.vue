@@ -17,6 +17,7 @@
             class="list__input"
             v-model="service.name"
             placeholder="Name (i.e. google-personal-account)"
+            @keydown="onNameInputKeyDown"
           />
         </div>
         <div class="service-element-dialog__input">
@@ -80,7 +81,7 @@
           v-for="image in logos"
           :key="image.id"
           class="service-element-dialog__image-button"
-          type="transparent"
+          :type="image === selectedImage ? 'secondary' : 'transparent'"
           width="shrink"
           shape="circled"
           @click="onImageSelect(image)"
@@ -98,7 +99,7 @@
           v-for="image in emojis"
           :key="image.id"
           class="service-element-dialog__image-button"
-          type="transparent"
+          :type="image === selectedImage ? 'secondary' : 'transparent'"
           width="shrink"
           shape="circled"
           @click="onImageSelect(image)"
@@ -255,6 +256,12 @@
       this.imageMenu.close();
     }
 
+    public onNameInputKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Enter') {
+        this.onConfirm();
+      }
+    }
+
   }
 </script>
 
@@ -305,12 +312,19 @@
       max-width: $grid-step * 80;
       overflow: auto;
       z-index: 100000;
+      overscroll-behavior: none;
     }
 
     &__image-menu-heading {
       @include UiTypographyBody2();
       @include UiMargin(sm, bottom);
       @include UiPadding(sm, top);
+    }
+
+    &__image-menu-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
     }
 
   }

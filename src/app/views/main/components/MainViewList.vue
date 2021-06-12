@@ -79,9 +79,10 @@
     >
       <template slot="body">
         <PasswordField
+          v-model="inputMasterKey"
           class="list__dialog-input-row"
           ref="passwordField"
-          v-model="inputMasterKey"
+          @confirm="onKeyDialogConfirm()"
         />
 
         <p class="list__dialog-description">
@@ -213,6 +214,11 @@
     }
 
     public onKeyDialogConfirm() {
+      if (!this.inputMasterKey.length) {
+        this.notificationService.show({ text: 'Master key can not be empty!', type: 'error' });
+        return;
+      }
+
       this.setMasterKeyUseCase.perform(this.inputMasterKey);
       this.keyDialog.hide();
     }

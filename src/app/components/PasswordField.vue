@@ -10,7 +10,9 @@
       :readonly="readonly"
       :size="size"
       :type="isPasswordShown ? 'text' : 'password'"
+      autocomplete="off"
       :disabled="isDisabled"
+      @keydown="onKeyDown"
     />
 
     <UiButton
@@ -32,6 +34,7 @@
   import Vue from 'vue';
   import {
     Component,
+    Emit,
     Prop,
     PropSync,
     Ref,
@@ -77,6 +80,17 @@
 
     public focus() {
       (this.input.$el as HTMLInputElement).focus();
+    }
+
+    public onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Enter') {
+        this.confirm();
+      }
+    }
+
+    @Emit()
+    public confirm() {
+      return null;
     }
 
   }
