@@ -367,7 +367,9 @@
     &__section {
       @include UiMargin(md, bottom);
       @include UiPadding(md, bottom);
-      border-bottom: 1px solid UiColor(shade-400);
+      &:not(:last-of-type) {
+        border-bottom: 1px solid UiColor(shade-400);
+      }
     }
 
     &__description {

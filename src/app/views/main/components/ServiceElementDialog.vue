@@ -11,6 +11,7 @@
         <div class="service-element-dialog__input">
           <span id="name-label" class="service-element-dialog__input-label">Service name</span>
           <UiInput
+            ref="nameField"
             v-if="service"
             aria-labelledby="name-label"
             class="list__input"
@@ -191,6 +192,9 @@
     @Ref()
     public imageSelectButton: UiButton;
 
+    @Ref()
+    public nameField: UiInput;
+
     public imageSelectButtonEl: HTMLButtonElement = null;
 
     mounted() {
@@ -238,6 +242,10 @@
       }
 
       this.dialog.show();
+
+      if (!this.isEditing) {
+        setTimeout(() => (this.nameField.$el as HTMLInputElement).focus(), 50);
+      }
     }
 
     public onImageSelect(image: ImageEntity) {

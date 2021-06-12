@@ -53,6 +53,12 @@
       </div>
     </div>
 
+    <div class="list__empty" v-if="services.length === 0">
+      <h3 class="list__empty-heading">It is time to add your services into your list!</h3>
+      <p class="list__empty-description">Click on the "+" button in the upper right corner to start adding services.</p>
+      <UiResponsiveImage class="list__empty-image" src="assets/illustrations/empty.svg"/>
+    </div>
+
     <ServiceElementDialog
       ref="serviceElementDialog"
       @confirm="onServiceDialogConfirm"
@@ -63,9 +69,7 @@
       text="This action is irreversible."
       ref="deleteDialog"
       @primary-button-click="onDeleteConfirm()"
-    >
-
-    </UiDialog>
+    />
 
     <UiDialog
       title="Enter your master key"
@@ -76,6 +80,7 @@
       <template slot="body">
         <PasswordField
           class="list__dialog-input-row"
+          ref="passwordField"
           v-model="inputMasterKey"
         />
 
@@ -107,6 +112,7 @@
   import UiInput from '@/app/ui-kit/UiInput.vue';
   import UiIcon from '@/app/ui-kit/UiIcon.vue';
   import UiDialog from '@/app/ui-kit/UiDialog.vue';
+  import UiResponsiveImage from '@/app/ui-kit/UiResponsiveImage.vue';
   import ServiceListElement from '@/app/views/main/components/ServiceListElement.vue';
   import ServiceElementDialog from '@/app/views/main/components/ServiceElementDialog.vue';
   import PasswordField from '@/app/components/PasswordField.vue';
@@ -119,6 +125,7 @@
       UiInput,
       UiIcon,
       UiDialog,
+      UiResponsiveImage,
       ServiceListElement,
       ServiceElementDialog,
       PasswordField,
@@ -155,6 +162,9 @@
 
     @Ref()
     public keyDialog: UiDialog;
+
+    @Ref()
+    public passwordField: PasswordField;
 
     public isEditing: boolean = false;
 
@@ -199,6 +209,7 @@
 
     public onUnlockClick() {
       this.keyDialog.show();
+      setTimeout(() => this.passwordField.focus(), 50);
     }
 
     public onKeyDialogConfirm() {
@@ -298,6 +309,25 @@
       @include UiBorderRadius(sm);
       background-color: UiColor(neutral-light);
       color: UiColor(neutral-dark);
+    }
+
+    &__empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__empty-heading {
+      @include UiTypographyHeading4();
+    }
+
+    &__empty-description {
+      @include UiTypographyBody2();
+      @include UiMargin(xs, top);
+    }
+
+    &__empty-image {
+      @include UiMargin(lg, top);
     }
 
   }

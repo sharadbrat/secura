@@ -1,6 +1,7 @@
 <template>
   <div class="password-field">
     <UiInput
+      ref="input"
       :value="password"
       @input="$emit('input', $event)"
       class="password-field__input"
@@ -29,7 +30,12 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component, Prop, PropSync } from 'vue-property-decorator';
+  import {
+    Component,
+    Prop,
+    PropSync,
+    Ref,
+  } from 'vue-property-decorator';
 
   import UiInput from '@/app/ui-kit/UiInput.vue';
   import UiButton from '@/app/ui-kit/UiButton.vue';
@@ -55,6 +61,9 @@
 
     @PropSync('value') public password!: string;
 
+    @Ref()
+    public input: UiInput;
+
     public isPasswordShown: boolean = false;
 
     public get smallerSize(): string {
@@ -64,6 +73,10 @@
         sm: 'xs',
       };
       return sizeMap[this.size] || 'sm';
+    }
+
+    public focus() {
+      (this.input.$el as HTMLInputElement).focus();
     }
 
   }

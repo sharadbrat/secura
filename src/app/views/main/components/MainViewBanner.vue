@@ -122,6 +122,10 @@
     &__card {
       overflow: hidden;
       @include UiPadding(md);
+
+      @include UiMediaMobile() {
+        @include UiPadding(md, top, false);
+      }
     }
 
     &__card-image {

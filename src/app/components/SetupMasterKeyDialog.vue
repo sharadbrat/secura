@@ -6,7 +6,7 @@
     @primary-button-click="onConfirm"
   >
     <template slot="body">
-      <PasswordField v-model="masterKey"/>
+      <PasswordField ref="passwordField" v-model="masterKey"/>
 
       <UiCheckbox
         v-model="isMasterKeyStored"
@@ -56,12 +56,16 @@
     @Ref()
     public dialog: UiDialog;
 
+    @Ref()
+    public passwordField: PasswordField;
+
     public masterKey: string = '';
 
     public isMasterKeyStored: boolean = false;
 
     public show() {
       this.dialog.show();
+      setTimeout(() => this.passwordField.focus(), 50);
     }
 
     public hide() {

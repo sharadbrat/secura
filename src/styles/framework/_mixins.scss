@@ -39,7 +39,8 @@ $_input-icon-margin-mobile: map_get($grid-spacing-mobile, md);
   color: UiColor(shade-700);
 
   &::placeholder, ::placeholder {
-    @include UiTypographyParagraph();
+    font-size: inherit;
+    font-weight: inherit;
     color: UiColor(shade-600);
   }
 

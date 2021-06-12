@@ -42,12 +42,12 @@
         {
           url: 'settings',
           title: 'Settings',
-          icon: null,
+          icon: 'settings',
         },
         {
           url: 'about',
           title: 'About',
-          icon: null,
+          icon: 'question',
         },
       ];
     }

@@ -4,7 +4,9 @@
 
     <NotificationPresenter/>
 
-    <router-view/>
+    <UiLoader class="app__loader" v-if="isLoading"/>
+
+    <router-view v-else/>
   </div>
 </template>
 
@@ -20,16 +22,20 @@
   import { PersistenceService, PersistenceServiceValueName } from '@/core/service/persistence/persistence.service';
 
   import UiIconsDefinition from '@/app/ui-kit/UiIconsDefinition.vue';
+  import UiLoader from '@/app/ui-kit/UiLoader.vue';
   import NotificationPresenter from '@/app/components/NotificationsPresenter.vue';
 
 
   @Component({
     components: {
       UiIconsDefinition,
+      UiLoader,
       NotificationPresenter,
     },
   })
   export default class App extends Vue {
+
+    public isLoading: boolean = true;
 
     @LazyInject(ErrorTrackerService)
     public errorTrackerService: ErrorTrackerService;
@@ -48,19 +54,25 @@
 
     public created() {
       this.errorTrackerService.setupErrorTracking();
-      this.loadPersistedMasterKey();
       this.printVersion();
-      this.listServicesUseCase.perform();
-      this.listImagesUseCase.perform();
+
+      this.loadData();
     }
 
-    public printVersion() {
+    private async loadData() {
+      this.loadPersistedMasterKey();
+      await this.listImagesUseCase.perform();
+      await this.listServicesUseCase.perform();
+      this.isLoading = false;
+    }
+
+    private printVersion() {
       const styles = 'color: orange; background-color: black; display: inline-block; padding: 12px;';
       // eslint-disable-next-line no-console
       console.log(`%cVersion: ${process.env.VUE_APP_VERSION}`, styles);
     }
 
-    public loadPersistedMasterKey() {
+    private loadPersistedMasterKey() {
       const masterKey = this.persistenceService.loadValue(PersistenceServiceValueName.MASTER_KEY);
       if (masterKey) {
         this.store.commit('keys/setPersisted', true);
@@ -70,3 +82,17 @@
 
   }
 </script>
+
+
+<style scoped lang="scss">
+  .app {
+
+    &__loader {
+      @include UiMargin(xl, top);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+  }
+</style>

@@ -5,12 +5,18 @@
 
         <UiLogo class="header__logo"/>
 
-        <button
+        <UiButton
           v-if="items && items.length > 0"
+          class="ui-hide_desktop"
+          size="sm"
+          type="transparent"
+          shape="circled"
+          width="shrink"
           aria-label="Menu"
-          class="header__mobile-nav-toggler"
-          @click="handleToggleMobileNav"
-        />
+          @click="handleToggleMobileNav()"
+        >
+          <UiIcon name="menu"/>
+        </UiButton>
 
         <nav class="header__nav-items">
 
@@ -21,6 +27,7 @@
             :to="item.url"
             :key="item.url"
           >
+            <UiIcon class="header__link-icon" :name="item.icon"/>
             {{item.title}}
           </router-link>
 
@@ -35,11 +42,20 @@
       :class="{ 'header__mobile-nav_is-expanded': isMobileNavExpanded }"
     >
       <nav class="header__mobile-nav-block">
-        <button
-          class="header__mobile-nav-toggler header__mobile-nav-toggler_close"
-          aria-label="Close menu"
-          @click="handleToggleMobileNav"
-        />
+        <div class="header__mopbile-nav-row">
+          <UiLogo/>
+
+          <UiButton
+            size="sm"
+            type="transparent"
+            shape="circled"
+            width="shrink"
+            aria-label="Close menu"
+            @click="handleToggleMobileNav()"
+          >
+            <UiIcon name="close"/>
+          </UiButton>
+        </div>
 
         <router-link
           v-for="item in items"
@@ -49,6 +65,7 @@
           :key="item.url"
           @click.native="handleToggleMobileNav"
         >
+          <UiIcon class="header__link-icon" :name="item.icon"/>
           {{item.title}}
         </router-link>
       </nav>
@@ -62,6 +79,8 @@
   import { Component, Prop } from 'vue-property-decorator';
 
   import UiLogo from '@/app/ui-kit/UiLogo.vue';
+  import UiIcon from '@/app/ui-kit/UiIcon.vue';
+  import UiButton from '@/app/ui-kit/UiButton.vue';
 
 
   export interface NavigationItem {
@@ -74,6 +93,8 @@
   @Component({
     components: {
       UiLogo,
+      UiIcon,
+      UiButton,
     },
   })
   export default class UiHeader extends Vue {
@@ -173,42 +194,6 @@
 
     // MOBILE NAVIGATION
 
-    &__mobile-nav-toggler {
-      $image-data: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='7' y='10' width='18' height='2' rx='1' fill='%23585858'/%3E%3Crect x='7' y='20' width='18' height='2' rx='1' fill='%23585858'/%3E%3Crect x='7' y='15' width='18' height='2' rx='1' fill='%23585858'/%3E%3C/svg%3E%0A");
-      $size: $grid-step * 8;
-      width: $size;
-      height: $size;
-
-      background-image: $image-data;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-color: transparent;
-      border-radius: 50%;
-
-      border: none;
-      box-shadow: none;
-      appearance: none;
-
-      cursor: pointer;
-
-      &:active {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-
-      &_close {
-        $image-data: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18.3002 5.70997C17.9102 5.31997 17.2802 5.31997 16.8902 5.70997L12.0002 10.59L7.11022 5.69997C6.72022 5.30997 6.09021 5.30997 5.70021 5.69997C5.31021 6.08997 5.31021 6.71997 5.70021 7.10997L10.5902 12L5.70021 16.89C5.31021 17.28 5.31021 17.91 5.70021 18.3C6.09021 18.69 6.72022 18.69 7.11022 18.3L12.0002 13.41L16.8902 18.3C17.2802 18.69 17.9102 18.69 18.3002 18.3C18.6902 17.91 18.6902 17.28 18.3002 16.89L13.4102 12L18.3002 7.10997C18.6802 6.72997 18.6802 6.08997 18.3002 5.70997V5.70997Z' fill='%23585858'/%3E%3C/svg%3E%0A");
-        background-image: $image-data;
-        margin-left: auto;
-        margin-bottom: map_get($grid-spacing, md);
-        margin-right: map_get($grid-spacing, md);
-      }
-
-      @include UiMediaDesktop() {
-        display: none;
-      }
-    }
-
     &__mobile-nav {
 
       display: block;
@@ -241,16 +226,30 @@
     }
 
     &__mobile-nav-block {
+      @include UiPadding(md, top);
+      @include UiPadding(md, bottom);
       height: 100vh;
       width: 90%;
       display: flex;
       flex-direction: column;
-      padding: map_get($grid-spacing, md) 0;
       background-color: UiColor(shade-100);
 
       transform: translateX(-($grid-step * 30));
 
       transition: transform ease-out 300ms;
+    }
+
+    &__link-icon {
+      @include UiMargin(xxs, right);
+      margin-bottom: 2px;
+    }
+
+    &__mopbile-nav-row {
+      @include UiPadding(md, left);
+      @include UiPadding(md, right);
+      @include UiPadding(md, bottom);
+      display: flex;
+      justify-content: space-between;
     }
   }
 </style>
