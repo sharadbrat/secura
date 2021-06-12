@@ -3,6 +3,7 @@ import { injectable } from 'inversify';
 
 export enum PersistenceServiceValueName {
   MASTER_KEY = 'master_key',
+  THEME = 'theme',
 }
 
 

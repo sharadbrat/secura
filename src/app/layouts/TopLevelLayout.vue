@@ -14,8 +14,6 @@
   import { Component, Prop } from 'vue-property-decorator';
   import { State } from 'vuex-class';
 
-  import { ServiceEntity } from '@/core/entity/service';
-
   import UiHeader, { NavigationItem } from '@/app/ui-kit/UiHeader.vue';
 
 
@@ -31,11 +29,8 @@
     @State(state => state.keys.masterKey)
     public masterKey: string;
 
-    @State(state => state.services.services)
-    public services: ServiceEntity[];
-
     public get isNavDisplayed(): boolean {
-      return Boolean(this.masterKey || this.services.length > 0);
+      return Boolean(this.masterKey);
     }
 
     public get navItems(): NavigationItem[] {

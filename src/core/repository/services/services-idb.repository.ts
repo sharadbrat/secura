@@ -1,11 +1,11 @@
 import { inject } from 'inversify';
-import sha256 from 'crypto-js/sha256';
 
 import { ServiceEntity, ServiceEntityId } from '@/core/entity/service';
 import { StoreProviderService } from '@/core/service/store-provider/store-provider.service';
 import { IdbObjectStores, IdbService } from '@/core/service/idb/idb.service';
 import { ServicesRepository } from '@/core/repository/services/services.repository';
 import { ServiceEntityDTO, ServicesIdbAdapter } from '@/core/repository/services/services-idb-adapter';
+import { generateUUID } from '@/core/utils/generate-uuid';
 
 
 /**
@@ -33,9 +33,25 @@ export class ServicesRepositoryIdbImpl extends ServicesRepository {
     return entities;
   }
 
+  public async setList(services: ServiceEntity[]): Promise<ServiceEntity[]> {
+    const db = await this.idbService.db;
+
+    await db.clear(IdbObjectStores.SERVICES);
+    const promises = services.map(el => {
+      const dto = this.idbAdapter.serialize(el);
+      return db.put(IdbObjectStores.SERVICES, dto, el.id);
+    });
+
+    await Promise.all(promises);
+
+    this.store.commit('services/setServices', services);
+
+    return services;
+  }
+
   public async create(entity: ServiceEntity): Promise<ServiceEntity> {
     const db = await this.idbService.db;
-    const id = sha256(entity.name).toString();
+    const id = generateUUID();
 
     const newEntity = new ServiceEntity({
       id,
@@ -71,6 +87,18 @@ export class ServicesRepositoryIdbImpl extends ServicesRepository {
     this.store.commit('services/updateService', entity);
 
     return entity;
+  }
+
+  public async deleteAll(): Promise<ServiceEntity[]> {
+    const db = await this.idbService.db;
+    await db.clear(IdbObjectStores.SERVICES);
+
+    const dtos: ServiceEntityDTO[] = await db.getAll(IdbObjectStores.SERVICES);
+    const entities = this.idbAdapter.deserializeList(dtos);
+
+    this.store.commit('services/clear', null);
+
+    return entities;
   }
 
 }

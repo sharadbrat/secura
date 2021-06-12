@@ -6,6 +6,6 @@ import nanoid from 'nanoid';
  * @return {string}
  * @public
  */
-export function generateUUID(length?: number): string {
+export function generateUUID(length: number = 32): string {
   return nanoid(length);
 }

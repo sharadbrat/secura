@@ -33,6 +33,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component, Prop } from 'vue-property-decorator';
+  import { State } from 'vuex-class';
 
   import UiButton from '@/app/ui-kit/UiButton.vue';
   import UiIcon from '@/app/ui-kit/UiIcon.vue';
@@ -49,6 +50,15 @@
     @Prop() public title: string;
 
     @Prop() public backUrl: string;
+
+    @State(state => state.keys.masterKey)
+    public masterKey: string;
+
+    mounted() {
+      if (!this.masterKey) {
+        this.$router.replace('/');
+      }
+    }
 
   }
 </script>

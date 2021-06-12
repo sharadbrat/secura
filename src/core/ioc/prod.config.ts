@@ -33,6 +33,10 @@ import { RemoveServiceUseCase } from '@/core/use-case/services/remove-service.us
 import { ListServicesUseCase } from '@/core/use-case/services/list-services.use-case';
 import { UpdateServiceUseCase } from '@/core/use-case/services/update-service.use-case';
 import { ListImagesUseCase } from '@/core/use-case/images/list-images.use-case';
+import { RemoveAllServicesUseCase } from '@/core/use-case/services/remove-all-services.use-case';
+import { RemoveAllUseCase } from '@/core/use-case/services/remove-all.use-case';
+import { ExportUseCase } from '@/core/use-case/import/export.use-case';
+import { ImportUseCase } from '@/core/use-case/import/import.use-case';
 
 
 export const IOC_CONTAINER_CONFIG_PROD: IocContainerConfig = {
@@ -61,5 +65,9 @@ export const IOC_CONTAINER_CONFIG_PROD: IocContainerConfig = {
     { identifier: RemoveServiceUseCase, implementer: RemoveServiceUseCase },
     { identifier: UpdateServiceUseCase, implementer: UpdateServiceUseCase },
     { identifier: ListImagesUseCase, implementer: ListImagesUseCase },
+    { identifier: RemoveAllServicesUseCase, implementer: RemoveAllServicesUseCase },
+    { identifier: RemoveAllUseCase, implementer: RemoveAllUseCase },
+    { identifier: ImportUseCase, implementer: ImportUseCase },
+    { identifier: ExportUseCase, implementer: ExportUseCase },
   ],
 };

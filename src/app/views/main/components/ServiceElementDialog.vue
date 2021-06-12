@@ -121,7 +121,7 @@
   import { NotificationService } from '@/core/service/notification/notification.service';
   import { ServiceEntity } from '@/core/entity/service';
   import { randomInArray } from '@/core/utils/random';
-  import { ImageEntity } from '@/core/entity/image';
+  import { ImageEntity, ImageEntityId } from '@/core/entity/image';
 
   import UiButton from '@/app/ui-kit/UiButton.vue';
   import UiDialog from '@/app/ui-kit/UiDialog.vue';
@@ -174,6 +174,9 @@
     @Getter('images/logos')
     public logos: ImageEntity[];
 
+    @Getter('images/getById')
+    public getImageById: (id: ImageEntityId) => ImageEntity;
+
     public selectedImage: ImageEntity = null;
 
     @LazyInject(NotificationService)
@@ -222,6 +225,7 @@
       this.service = null;
       if (service) {
         this.service = service.clone();
+        this.selectedImage = this.getImageById(this.service.pictureId);
         this.isEditing = true;
       } else {
         this.selectedImage = randomInArray(this.emojis);

@@ -26,4 +26,10 @@ export class KeysStoreModule extends VuexModule implements KeysStoreModuleState 
     this.isPersisted = value;
   }
 
+  @Mutation
+  public removeKey() {
+    this.masterKey = '';
+    this.isPersisted = false;
+  }
+
 }

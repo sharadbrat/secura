@@ -171,6 +171,7 @@
     }
 
     public onAddButtonClick() {
+      this.isEditing = false;
       this.serviceElementDialog.show();
     }
 

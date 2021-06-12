@@ -31,6 +31,11 @@ export class ServicesStoreModule extends VuexModule implements ServicesStoreModu
   }
 
   @Mutation
+  public clear() {
+    this.services = [];
+  }
+
+  @Mutation
   public updateService(service: ServiceEntity) {
     const index = this.services.findIndex(el => el.id === service.id);
     const newServices = [...this.services];

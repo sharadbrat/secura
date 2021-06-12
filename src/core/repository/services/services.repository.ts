@@ -27,10 +27,14 @@ export abstract class ServicesRepository implements Repository<ServiceEntity, Se
 
   public abstract list(params?: RepositoryRequestParams): Promise<ServiceEntity[]>;
 
+  public abstract setList(services: ServiceEntity[], params?: RepositoryRequestParams): Promise<ServiceEntity[]>;
+
   public abstract create(model: ServiceEntity): Promise<ServiceEntity>;
 
   public abstract delete(id: ServiceEntityId): Promise<ServiceEntity>;
 
   public abstract update(id: ServiceEntityId, model: ServiceEntity): Promise<ServiceEntity>;
+
+  public abstract deleteAll(): Promise<ServiceEntity[]>;
 
 }
