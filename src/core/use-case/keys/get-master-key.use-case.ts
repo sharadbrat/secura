@@ -1,5 +1,4 @@
 import { inject, injectable } from 'inversify';
-import sha256 from 'crypto-js/sha256';
 
 import { UseCase } from '@/core/use-case/base-use-case';
 import { PersistenceService, PersistenceServiceValueName } from '@/core/service/persistence/persistence.service';
@@ -7,7 +6,7 @@ import { StoreProviderService } from '@/core/service/store-provider/store-provid
 
 
 @injectable()
-export class SetMasterKeyUseCase implements UseCase {
+export class GetMasterKeyUseCase implements UseCase {
 
   public constructor(
     @inject(PersistenceService) private persistenceService: PersistenceService,
@@ -15,18 +14,13 @@ export class SetMasterKeyUseCase implements UseCase {
   ) {
   }
 
-  public async perform(masterKey: string, isStored: boolean = false): Promise<void> {
-    if (!masterKey) {
-      throw new Error('Master key can not be falsy value!');
+  public async perform(): Promise<string> {
+    const masterKey = this.persistenceService.loadValue(PersistenceServiceValueName.MASTER_KEY);
+    if (masterKey) {
+      this.store.commit('keys/setPersisted', true);
+      this.store.commit('keys/setMasterKey', masterKey);
     }
-
-    const masterKeyHash = sha256(masterKey).toString();
-
-    if (isStored) {
-      this.persistenceService.storeValue(PersistenceServiceValueName.MASTER_KEY, masterKeyHash);
-    }
-
-    this.store.commit('keys/setMasterKey', masterKeyHash);
+    return masterKey;
   }
 
 }

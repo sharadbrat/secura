@@ -1,3 +1,4 @@
+import { Theme } from '@/core/entity/theme';
 import { ImageEntity } from '@/core/entity/image';
 import { ServiceEntity } from '@/core/entity/service';
 import { UserEntity } from '@/core/entity/user';
@@ -9,6 +10,15 @@ import { UserEntity } from '@/core/entity/user';
  */
 export interface UsersStoreModuleState {
   user: UserEntity;
+}
+
+
+/**
+ * @interface ThemesStoreModuleState
+ * @public
+ */
+export interface ThemesStoreModuleState {
+  theme: Theme;
 }
 
 /**

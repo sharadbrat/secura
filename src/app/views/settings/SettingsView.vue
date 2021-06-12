@@ -21,7 +21,30 @@
 
       <section class="settings-view__section">
         <h2 class="settings-view__heading">Theme</h2>
-        <p>TBD</p>
+        <UiRadio
+          class="settings-view__theme-radio"
+          :value="themes.DEFAULT"
+          :model="theme"
+          @change="onThemeChange"
+        >
+          Use OS default theme
+        </UiRadio>
+        <UiRadio
+          class="settings-view__theme-radio"
+          :value="themes.DARK"
+          :model="theme"
+          @change="onThemeChange"
+        >
+          Dark
+        </UiRadio>
+        <UiRadio
+          class="settings-view__theme-radio"
+          :value="themes.LIGHT"
+          :model="theme"
+          @change="onThemeChange"
+        >
+          Light
+        </UiRadio>
       </section>
 
       <section class="settings-view__section">
@@ -174,12 +197,15 @@
   import { RemoveAllUseCase } from '@/core/use-case/services/remove-all.use-case';
   import { ExportUseCase } from '@/core/use-case/import/export.use-case';
   import { ImportUseCase } from '@/core/use-case/import/import.use-case';
+  import { SetThemeUseCase } from '@/core/use-case/theme/set-theme.use-case';
   import { NotificationService } from '@/core/service/notification/notification.service';
   import { download } from '@/core/utils/download';
+  import { Theme } from '@/core/entity/theme';
 
   import SecondLevelLayout from '@/app/layouts/SecondLevelLayout.vue';
   import UiButton from '@/app/ui-kit/UiButton.vue';
   import UiIcon from '@/app/ui-kit/UiIcon.vue';
+  import UiRadio from '@/app/ui-kit/UiRadio.vue';
   import UiDialog from '@/app/ui-kit/UiDialog.vue';
   import UiInput from '@/app/ui-kit/UiInput.vue';
   import SetupMasterKeyDialog from '@/app/components/SetupMasterKeyDialog.vue';
@@ -192,6 +218,7 @@
       UiIcon,
       UiDialog,
       UiInput,
+      UiRadio,
       SetupMasterKeyDialog,
     },
   })
@@ -211,6 +238,9 @@
 
     @LazyInject(ExportUseCase)
     public exportUseCase: ExportUseCase;
+
+    @LazyInject(SetThemeUseCase)
+    public setThemeUseCase: SetThemeUseCase;
 
     @LazyInject(NotificationService)
     public notificationService: NotificationService;
@@ -235,6 +265,11 @@
 
     @State(state => state.services.services.length > 0)
     public hasServices: boolean;
+
+    @State(state => state.themes.theme)
+    public theme: Theme;
+
+    public themes = Theme;
 
     public importEncryptionKey: string = '';
 
@@ -351,6 +386,10 @@
       }
     }
 
+    public async onThemeChange(theme: Theme) {
+      await this.setThemeUseCase.perform(theme);
+    }
+
   }
 </script>
 
@@ -435,6 +474,10 @@
       @include UiMargin(xxs, bottom);
       @include UiMargin(sm, top);
       display: block;
+    }
+
+    &__theme-radio {
+      @include UiMargin(xs, bottom);
     }
 
   }

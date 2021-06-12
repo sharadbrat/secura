@@ -1,5 +1,12 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    :class="{
+      'app_theme-light': theme === themes.LIGHT,
+      'app_theme-dark': theme === themes.DARK,
+      'app_theme-default': theme === themes.DEFAULT,
+    }"
+  >
     <UiIconsDefinition/>
 
     <NotificationPresenter/>
@@ -13,13 +20,16 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component } from 'vue-property-decorator';
+  import { State } from 'vuex-class';
 
   import { LazyInject } from '@/core/ioc';
+  import { Theme } from '@/core/entity/theme';
   import { ErrorTrackerService } from '@/core/service/error-tracker/error-tracker.service';
   import { StoreProviderService } from '@/core/service/store-provider/store-provider.service';
   import { ListServicesUseCase } from '@/core/use-case/services/list-services.use-case';
   import { ListImagesUseCase } from '@/core/use-case/images/list-images.use-case';
-  import { PersistenceService, PersistenceServiceValueName } from '@/core/service/persistence/persistence.service';
+  import { GetMasterKeyUseCase } from '@/core/use-case/keys/get-master-key.use-case';
+  import { GetThemeUseCase } from '@/core/use-case/theme/get-theme.use-case';
 
   import UiIconsDefinition from '@/app/ui-kit/UiIconsDefinition.vue';
   import UiLoader from '@/app/ui-kit/UiLoader.vue';
@@ -49,8 +59,16 @@
     @LazyInject(ListImagesUseCase)
     public listImagesUseCase: ListImagesUseCase;
 
-    @LazyInject(PersistenceService)
-    public persistenceService: PersistenceService;
+    @LazyInject(GetMasterKeyUseCase)
+    public getMasterKeyUseCase: GetMasterKeyUseCase;
+
+    @LazyInject(GetThemeUseCase)
+    public getThemeUseCase: GetThemeUseCase;
+
+    @State(state => state.themes.theme)
+    public theme: Theme;
+
+    public themes = Theme;
 
     public created() {
       this.errorTrackerService.setupErrorTracking();
@@ -60,7 +78,8 @@
     }
 
     private async loadData() {
-      this.loadPersistedMasterKey();
+      await this.getThemeUseCase.perform();
+      await this.getMasterKeyUseCase.perform();
       await this.listImagesUseCase.perform();
       await this.listServicesUseCase.perform();
       this.isLoading = false;
@@ -70,14 +89,6 @@
       const styles = 'color: orange; background-color: black; display: inline-block; padding: 12px;';
       // eslint-disable-next-line no-console
       console.log(`%cVersion: ${process.env.VUE_APP_VERSION}`, styles);
-    }
-
-    private loadPersistedMasterKey() {
-      const masterKey = this.persistenceService.loadValue(PersistenceServiceValueName.MASTER_KEY);
-      if (masterKey) {
-        this.store.commit('keys/setPersisted', true);
-        this.store.commit('keys/setMasterKey', masterKey);
-      }
     }
 
   }
