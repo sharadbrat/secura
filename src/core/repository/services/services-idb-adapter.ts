@@ -10,6 +10,7 @@ export interface ServiceEntityDTO {
   color: string;
   name: string;
   pictureId: string;
+  createdAt: number;
 }
 
 
@@ -26,6 +27,7 @@ export class ServicesIdbAdapter extends RepositoryAdapter<ServiceEntity, Service
       color: dto.color,
       name: dto.name,
       pictureId: dto.pictureId,
+      createdAt: dto.createdAt,
     });
   }
 
@@ -35,6 +37,7 @@ export class ServicesIdbAdapter extends RepositoryAdapter<ServiceEntity, Service
       color: model.color,
       name: model.name,
       pictureId: model.pictureId,
+      createdAt: model.createdAt,
     };
   }
 

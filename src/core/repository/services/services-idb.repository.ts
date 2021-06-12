@@ -58,6 +58,7 @@ export class ServicesRepositoryIdbImpl extends ServicesRepository {
       name: entity.name,
       color: entity.color,
       pictureId: entity.pictureId,
+      createdAt: Date.now(),
     });
     const dto = this.idbAdapter.serialize(newEntity);
 

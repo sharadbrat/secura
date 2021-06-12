@@ -238,6 +238,7 @@
           color: randomInArray(this.colors),
           name: '',
           pictureId: this.selectedImage.id,
+          createdAt: null,
         });
       }
 

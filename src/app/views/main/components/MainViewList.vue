@@ -97,7 +97,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component, Ref } from 'vue-property-decorator';
-  import { State } from 'vuex-class';
+  import { Getter, State } from 'vuex-class';
 
   import { LazyInject } from '@/core/ioc';
   import { NotificationService } from '@/core/service/notification/notification.service';
@@ -148,7 +148,7 @@
     @LazyInject(SetMasterKeyUseCase)
     public setMasterKeyUseCase: SetMasterKeyUseCase;
 
-    @State(state => state.services.services)
+    @Getter('services/sortedServices')
     public services: ServiceEntity[];
 
     @State(state => state.keys.masterKey)
@@ -315,6 +315,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      text-align: center;
     }
 
     &__empty-heading {

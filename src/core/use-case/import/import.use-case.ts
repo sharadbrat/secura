@@ -21,6 +21,7 @@ export class ImportUseCase implements UseCase {
       color: el.color,
       name: el.name,
       pictureId: el.pictureId,
+      createdAt: el.createdAt,
     }));
 
     await this.servicesRepository.setList(entities);

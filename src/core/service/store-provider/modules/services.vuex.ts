@@ -15,6 +15,10 @@ export class ServicesStoreModule extends VuexModule implements ServicesStoreModu
 
   public services: ServiceEntity[] = [];
 
+  public get sortedServices() {
+    return this.services.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+  }
+
   @Mutation
   public setServices(services: ServiceEntity[]) {
     this.services = services;
