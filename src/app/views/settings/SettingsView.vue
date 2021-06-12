@@ -232,7 +232,7 @@
 
     public importEncryptionKey: string = '';
 
-    public importDataFile: Blob = null;
+    public importDataFile: File = null;
 
     private isEditingMasterKey: boolean = false;
 
@@ -302,7 +302,7 @@
       }
 
       try {
-        const cypher = await this.importDataFile.text();
+        const cypher = await (this.importDataFile as any).text();
         await this.importUseCase.perform(cypher, this.importEncryptionKey);
 
         this.importEncryptionKey = '';
