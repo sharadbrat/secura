@@ -6,7 +6,7 @@
   },
   {
     "path": "dist/index.html",
-    "limit": "1 KB",
+    "limit": "2 KB",
     "name": "html"
   },
   {
