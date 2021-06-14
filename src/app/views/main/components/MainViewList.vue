@@ -308,7 +308,7 @@
       border-radius: $size / 2;
 
       @include UiTheme() {
-        background-color: UiColor(shade-100);
+        background-color: UiColor(shade-200);
       }
     }
 
