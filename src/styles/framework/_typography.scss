@@ -128,7 +128,9 @@ $font-weight: (
 // INTERACTIVE ELEMENTS
 
 @mixin UiTypographyLink {
-  color: UiColor(link);
+  @include UiTheme() {
+    color: UiColor(link);
+  }
   text-decoration: none;
 
   &:hover, &:active, &:focus {

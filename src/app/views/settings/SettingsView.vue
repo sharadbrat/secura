@@ -413,7 +413,9 @@
       @include UiMargin(md, bottom);
       @include UiPadding(md, bottom);
       &:not(:last-of-type) {
-        border-bottom: 1px solid UiColor(shade-400);
+        @include UiTheme() {
+          border-bottom: 1px solid UiColor(shade-400);
+        }
       }
     }
 
@@ -427,18 +429,24 @@
       &_highlighted {
         @include UiBorderRadius(sm);
         @include UiPadding(xs);
-        background-color: UiColor(neutral-light);
-        color: UiColor(neutral-dark);
+        @include UiTheme() {
+          background-color: UiColor(neutral-light);
+          color: UiColor(neutral-dark);
+        }
       }
     }
 
     &__delete {
-      border-color: UiColor(negative);
-      color: UiColor(negative);
+      @include UiTheme() {
+        border-color: UiColor(negative);
+        color: UiColor(negative);
+      }
     }
 
     &__delete-all {
-      background-color: UiColor(negative);
+      @include UiTheme() {
+        background-color: UiColor(negative);
+      }
     }
 
     &__delete-icon {
@@ -449,19 +457,25 @@
     &__danger-zone {
       @include UiBorderRadius(md);
       @include UiPadding(md);
-      border: 1px solid UiColor(negative-light);
+      @include UiTheme() {
+        border: 1px solid UiColor(negative-light);
+      }
     }
 
     &__danger-zone-delimiter {
       @include UiMargin(md, top);
       @include UiMargin(md, bottom);
-      border-bottom: 1px solid UiColor(shade-400);
+      @include UiTheme() {
+        border-bottom: 1px solid UiColor(shade-400);
+      }
     }
 
     &__import-button {
       @include UiMargin(sm, right);
-      color: UiColor(warning-dark);
-      border-color: UiColor(warning);
+      @include UiTheme() {
+        color: UiColor(warning-dark);
+        border-color: UiColor(warning);
+      }
     }
 
     &__import-icon {

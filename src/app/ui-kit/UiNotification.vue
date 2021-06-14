@@ -46,13 +46,17 @@
     animation-duration: 100ms;
 
     &_type-error {
-      background-color: UiColor(negative-light);
-      color: UiColor(negative-dark);
+      @include UiTheme() {
+        background-color: UiColor(negative-light);
+        color: UiColor(negative-dark);
+      }
     }
 
     &_type-info {
-      background-color: UiColor(neutral-light);
-      color: UiColor(neutral-dark);
+      @include UiTheme() {
+        background-color: UiColor(neutral-light);
+        color: UiColor(neutral-dark);
+      }
     }
 
     &__text {

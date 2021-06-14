@@ -76,7 +76,10 @@
 
     display: inline-block;
     cursor: default;
-    border: 1px solid UiColor(shade-400);
+
+    @include UiTheme() {
+      border: 1px solid UiColor(shade-400);
+    }
 
 
     &:not(:empty)::before {
@@ -86,7 +89,9 @@
 
     &::before {
       content: attr(data-placeholder);
-      color: UiColor(shade-600);
+      @include UiTheme() {
+        color: UiColor(shade-600);
+      }
     }
 
 

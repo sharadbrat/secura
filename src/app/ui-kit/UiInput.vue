@@ -81,7 +81,6 @@
     @include UiInputAppearance();
     width: $grid-step * 72;
     position: relative;
-    background-color: UiColor(shade-200);
 
     &_is-block {
       width: 100%;

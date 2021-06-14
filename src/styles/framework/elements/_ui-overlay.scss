@@ -7,6 +7,9 @@
   left: 0;
   z-index: 1000;
 
-  background-color: rgba(UiColor(shade-700), 0.4);
   overscroll-behavior: contain;
+
+  @include UiTheme() {
+    background-color: rgba(UiColor(shade-700), 0.4);
+  }
 }

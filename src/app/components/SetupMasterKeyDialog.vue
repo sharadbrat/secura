@@ -103,8 +103,11 @@
       @include UiPadding(xs);
       @include UiMargin(sm, top);
       @include UiBorderRadius(sm);
-      background-color: UiColor(neutral-light);
-      color: UiColor(neutral-dark);
+
+      @include UiTheme() {
+        background-color: UiColor(neutral-light);
+        color: UiColor(neutral-dark);
+      }
     }
 
   }

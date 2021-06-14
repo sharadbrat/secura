@@ -112,23 +112,33 @@
 
     &_type-primary {
       @include UiButtonStates(false);
-      background-color: UiColor(main);
-      color: UiColor(shade-100);
+
+      @include UiTheme() {
+        background-color: UiColor(main);
+        color: UiColor(shade-100);
+      }
 
       &:disabled {
-        background-color: UiColor(shade-500);
+        @include UiTheme() {
+          background-color: UiColor(shade-500);
+        }
       }
     }
 
     &_type-secondary {
       @include UiButtonStates(true);
-      background-color: UiColor(shade-100);
-      color: UiColor(main);
-      border-color: UiColor(main);
+
+      @include UiTheme() {
+        background-color: UiColor(shade-100);
+        color: UiColor(main);
+        border-color: UiColor(main);
+      }
 
       &:disabled {
-        color: UiColor(shade-600);
-        border-color: UiColor(shade-600);
+        @include UiTheme() {
+          color: UiColor(shade-600);
+          border-color: UiColor(shade-600);
+        }
       }
     }
 
@@ -148,16 +158,22 @@
       }
 
       &:disabled {
-        color: UiColor(shade-600);
         text-decoration: none;
+
+        @include UiTheme() {
+          color: UiColor(shade-600);
+        }
       }
     }
 
     &_type-subdued {
       @include UiButtonStates(true);
 
-      color: UiColor(shade-600);
       font-weight: map_get($font-weight, semibold);
+
+        @include UiTheme() {
+          color: UiColor(shade-600);
+        }
      }
 
     &_type-transparent {

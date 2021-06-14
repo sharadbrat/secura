@@ -100,25 +100,35 @@
     justify-content: center;
     flex-shrink: 0;
 
-    border: 2px solid UiColor(main-light);
     border-radius: $grid-step;
     cursor: pointer;
-    background-color: UiColor(shade-100);
 
     transition: border-color ease-out $transition-speed;
     will-change: border-color;
 
+    @include UiTheme() {
+      border: 2px solid UiColor(main-light);
+      background-color: UiColor(shade-100);
+    }
+
     &_is-checked {
-      border-color: UiColor(main);
+      @include UiTheme() {
+        border-color: UiColor(main);
+      }
     }
 
     &_is-disabled {
-      border-color: UiColor(shade-600);
       cursor: auto;
       pointer-events: none;
 
+      @include UiTheme() {
+        border-color: UiColor(shade-600);
+      }
+
       .ui-checkbox__check-mark {
-        color: UiColor(shade-600);
+        @include UiTheme() {
+          color: UiColor(shade-600);
+        }
       }
     }
 
@@ -151,7 +161,9 @@
     }
 
     &__check-mark {
-      color: UiColor(main);
+      @include UiTheme() {
+        color: UiColor(main);
+      }
 
       opacity: 0;
       visibility: hidden;

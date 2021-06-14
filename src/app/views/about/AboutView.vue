@@ -6,7 +6,7 @@
       <UiLogo tag="span"/>
       <span class="about-view__version">{{appVersion}}</span>
 
-      <h2 class="about-view__heading">Secura is a headless password manager</h2>
+      <h2 class="about-view__heading">Secura: Headless password manager</h2>
 
       <p class="about-view__paragraph">
         Installable web app that stores your services and derives passwords for
@@ -93,8 +93,11 @@
       @include UiMargin(xxxs, top);
       @include UiMargin(sm, bottom);
       @include UiTypographyBodySmall();
-      color: UiColor(shade-650);
       display: block;
+
+      @include UiTheme() {
+        color: UiColor(shade-650);
+      }
     }
 
     &__image {

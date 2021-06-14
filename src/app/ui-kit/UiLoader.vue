@@ -38,7 +38,10 @@
       border: map_get($grid-spacing, xs) solid;
       border-radius: 50%;
       animation: ui-loader 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-      border-color: UiColor(main) transparent transparent transparent;
+
+      @include UiTheme() {
+        border-color: UiColor(main) transparent transparent transparent;
+      }
 
       &:nth-child(1) {
         animation-delay: 0.45s;

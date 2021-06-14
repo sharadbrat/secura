@@ -1,37 +1,149 @@
-$colors: (
-  "positive-light": #ADFFF4,
-  "positive": #00BFA6,
-  "positive-dark": #008F7C,
+$colors: () !default;
 
-  "negative-light": #F4BEB9,
-  "negative": #E25144,
-  "negative-dark": #9A1C0F,
 
-  "neutral-light": #E1F5FE,
-  "neutral": #29B6F6,
-  "neutral-dark": #0277BD,
+$themes: (
+  "dark": (
+    "positive-light": #008F7C,
+    "positive": #00BFA6,
+    "positive-dark": #ADFFF4,
 
-  "warning-light": #FFF8E1,
-  "warning": #FFCA28,
-  "warning-dark": #FFA000,
+    "negative-light": #9A1C0F,
+    "negative": #E25144,
+    "negative-dark": #F4BEB9,
 
-  "link": #56A4FF,
+    "neutral-light": #0277BD,
+    "neutral": #29B6F6,
+    "neutral-dark": #E1F5FE,
 
-  "main-light": #81D4FA,
-  "main": #29B6F6,
+    "warning-light": #FFA000,
+    "warning": #FFCA28,
+    "warning-dark": #FFF8E1,
 
-  "shade-900": #000000,
-  "shade-800": #404040,
-  "shade-700": #585858,
-  "shade-650": #B2B2B2,
-  "shade-600": #ACACAC,
-  "shade-500": #C8C8C8,
-  "shade-400": #EDEDED,
-  "shade-200": #F9FAFA,
-  "shade-100": #FFFFFF,
-) !default;
+    "link": #56A4FF,
+
+    "main-light": #0288d1,
+    "main": #29B6F6,
+
+    "shade-900": #FFFFFF,
+    "shade-800": #F9FAFA,
+    "shade-700": #EDEDED,
+    "shade-650": #C8C8C8,
+    "shade-600": #ACACAC,
+    "shade-500": #B2B2B2,
+    "shade-400": #585858,
+    "shade-200": #404040,
+    "shade-100": #000000,
+  ),
+  "light": (
+    "positive-light": #ADFFF4,
+    "positive": #00BFA6,
+    "positive-dark": #008F7C,
+
+    "negative-light": #F4BEB9,
+    "negative": #E25144,
+    "negative-dark": #9A1C0F,
+
+    "neutral-light": #E1F5FE,
+    "neutral": #29B6F6,
+    "neutral-dark": #0277BD,
+
+    "warning-light": #FFF8E1,
+    "warning": #FFCA28,
+    "warning-dark": #FFA000,
+
+    "link": #56A4FF,
+
+    "main-light": #81D4FA,
+    "main": #29B6F6,
+
+    "shade-900": #000000,
+    "shade-800": #404040,
+    "shade-700": #585858,
+    "shade-650": #B2B2B2,
+    "shade-600": #ACACAC,
+    "shade-500": #C8C8C8,
+    "shade-400": #EDEDED,
+    "shade-200": #F9FAFA,
+    "shade-100": #FFFFFF,
+  ),
+);
 
 
 @function UiColor($name) {
   @return map_get($colors, #{$name});
+}
+
+@mixin UiTheme($themes: $themes) {
+
+  @each $theme, $theme-colors in $themes {
+    .app_theme-#{$theme} & {
+      $colors: $theme-colors !global;
+
+      @content;
+
+      $colors: () !global;
+    }
+  }
+
+  .app_theme-default & {
+    $colors: map_get($themes, 'light') !global;
+
+    @content;
+
+    $colors: () !global;
+
+    @media (prefers-color-scheme: dark) {
+      $colors: map_get($themes, 'dark') !global;
+
+      @content;
+
+      $colors: () !global;
+    }
+
+    @media (prefers-color-scheme: light) {
+      $colors: map_get($themes, 'light') !global;
+
+      @content;
+
+      $colors: () !global;
+    }
+  }
+
+}
+
+@mixin UiThemeElement($themes: $themes) {
+
+  @each $theme, $theme-colors in $themes {
+    &.app_theme-#{$theme} {
+      $colors: $theme-colors !global;
+
+      @content;
+
+      $colors: () !global;
+    }
+  }
+
+  &.app_theme-default {
+    $colors: map_get($themes, 'light') !global;
+
+    @content;
+
+    $colors: () !global;
+
+    @media (prefers-color-scheme: dark) {
+      $colors: map_get($themes, 'dark') !global;
+
+      @content;
+
+      $colors: () !global;
+    }
+
+    @media (prefers-color-scheme: light) {
+      $colors: map_get($themes, 'light') !global;
+
+      @content;
+
+      $colors: () !global;
+    }
+  }
 }

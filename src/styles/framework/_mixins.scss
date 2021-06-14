@@ -34,28 +34,34 @@ $_input-icon-margin-mobile: map_get($grid-spacing-mobile, md);
   height: $height;
   width: 100%;
 
-  border: 1px solid UiColor(shade-400);
-  background-color: UiColor(background-primary);
-  color: UiColor(shade-700);
+  @include UiTheme() {
+    background-color: UiColor(shade-200);
+    border: 1px solid UiColor(shade-400);
+    color: UiColor(shade-700);
+  }
 
   &::placeholder, ::placeholder {
     font-size: inherit;
     font-weight: inherit;
-    color: UiColor(shade-600);
+    @include UiTheme() {
+      color: UiColor(shade-600);
+    }
   }
 
 }
 
 // adds standart button behavior
 @mixin UiButtonStates($is-darken) {
-  $overlay-color: UiColor(shade-100) !default;
-
-  @if ($is-darken) {
-    $overlay-color: UiColor(shade-700);
-  }
 
   &::after {
-    background-color: $overlay-color;
+
+    @include UiTheme() {
+      $overlay-color: UiColor(shade-100) !default;
+      @if ($is-darken) {
+        $overlay-color: UiColor(shade-700);
+      }
+      background-color: $overlay-color;
+    }
   }
 
   &:focus-visible {

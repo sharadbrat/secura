@@ -60,8 +60,11 @@
 
     height: fit-content;
     border-radius: 9 * $grid-step;
-    background-color: UiColor(shade-100);
-    border: 2px solid UiColor(main);
+
+    @include UiTheme() {
+      background-color: UiColor(shade-100);
+      border: 2px solid UiColor(main);
+    }
 
     &_size-md {
       @include UiPadding(sm);
@@ -79,13 +82,17 @@
     &_is-clickable {
       @include UiButtonStates(true);
       @include UiButtonAppearance();
-      border-color: UiColor(main);
       cursor: pointer;
+      @include UiTheme() {
+        border-color: UiColor(main);
+      }
     }
 
     &_is-inactive {
-      color: UiColor(shade-600);
-      border: 1px solid UiColor(main-weak);
+      @include UiTheme() {
+        color: UiColor(shade-600);
+        border: 1px solid UiColor(main-weak);
+      }
     }
 
   }

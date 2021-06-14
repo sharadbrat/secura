@@ -98,10 +98,13 @@
     height: $size;
     flex-shrink: 0;
 
-    border: 1px solid UiColor(main);
     border-radius: $size / 2;
-    background-color: UiColor(shade-100);
     appearance: none;
+
+    @include UiTheme() {
+      border: 1px solid UiColor(main);
+      background-color: UiColor(shade-100);
+    }
 
     &::before {
       content: "";
@@ -115,17 +118,24 @@
       transform: scale(0.8);
 
       pointer-events: none;
-      background-color: UiColor(main);
 
       transition-duration: $transition-speed;
       transition-property: transform opacity visibility;
       transition-timing-function: UiTransition() linear linear;
 
       will-change: opacity visibility transform;
+
+      @include UiTheme() {
+        background-color: UiColor(main);
+      }
+
     }
 
     &:checked {
-      border-color: UiColor(main);
+      @include UiTheme() {
+        border-color: UiColor(main);
+      }
+
       &::before {
         opacity: 1;
         visibility: visible;
@@ -134,12 +144,17 @@
     }
 
     &:disabled {
-      border-color: UiColor(shade-600);
       cursor: auto;
       pointer-events: none;
 
+      @include UiTheme() {
+        border-color: UiColor(shade-600);
+      }
+
       &::before {
-        color: UiColor(shade-600);
+        @include UiTheme() {
+          color: UiColor(shade-600);
+        }
       }
     }
 

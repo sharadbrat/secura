@@ -204,8 +204,10 @@
     animation-delay: 50ms;
     animation-timing-function: ease;
 
-    background-color: UiColor(shade-100);
     box-shadow: UiShadow(1);
+    @include UiTheme() {
+      background-color: UiColor(shade-100);
+    }
 
     &_size-sm {
       width: $grid-step * 100; // 400px

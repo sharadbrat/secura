@@ -193,8 +193,11 @@
 
     &__id {
       @include UiTypographyBodySmall();
-      color: UiColor(shade-600);
       word-break: break-all;
+
+      @include UiTheme() {
+        color: UiColor(shade-600);
+      }
     }
 
     &__heading-row {
@@ -242,10 +245,14 @@
       border-radius: $size / 2;
       flex-shrink: 0;
       overflow: hidden;
-      background-color: UiColor(shade-400);
+
       display: flex;
       justify-content: center;
       align-items: center;
+
+      @include UiTheme() {
+        background-color: UiColor(shade-400);
+      }
     }
 
     @keyframes ServiceElementFadeIn {

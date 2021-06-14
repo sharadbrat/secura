@@ -94,7 +94,10 @@
       left: 0;
       z-index: 1000;
       width: 100%;
-      border-bottom: 1px solid UiColor(shade-400);
+
+      @include UiTheme() {
+        border-bottom: 1px solid UiColor(shade-400);
+      }
     }
 
     &__header-container {
@@ -104,7 +107,9 @@
       align-items: center;
       height: $grid-step * 20; // 80px
 
-      background-color: UiColor(shade-100);
+      @include UiTheme() {
+        background-color: UiColor(shade-100);
+      }
 
       @include UiMediaMobile() {
         height: $grid-step * 15; // 60px

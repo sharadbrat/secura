@@ -126,7 +126,9 @@
       left: 0;
       z-index: 1000;
       width: 100%;
-      border-bottom: 1px solid UiColor(shade-400);
+      @include UiTheme() {
+        border-bottom: 1px solid UiColor(shade-400);
+      }
     }
 
     &__container {
@@ -137,7 +139,9 @@
       justify-content: space-between;
       height: $grid-step * 20; // 80px
 
-      background-color: UiColor(shade-100);
+      @include UiTheme() {
+        background-color: UiColor(shade-100);
+      }
 
       @include UiMediaMobile() {
         height: $grid-step * 15; // 60px
@@ -172,7 +176,9 @@
       padding: 0 map_get($grid-spacing, md);
 
       text-decoration: none;
-      color: UiColor(shade-700);
+      @include UiTheme() {
+        color: UiColor(shade-700);
+      }
 
       @include UiMediaMobileAndTablet() {
         height: $grid-step * 15;
@@ -187,7 +193,9 @@
       }
 
       &_is-active {
-        color: UiColor(main);
+        @include UiTheme() {
+          color: UiColor(main);
+        }
       }
 
     }
@@ -232,11 +240,14 @@
       width: 90%;
       display: flex;
       flex-direction: column;
-      background-color: UiColor(shade-100);
 
       transform: translateX(-($grid-step * 30));
 
       transition: transform ease-out 300ms;
+
+      @include UiTheme() {
+        background-color: UiColor(shade-100);
+      }
     }
 
     &__link-icon {

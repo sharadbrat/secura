@@ -42,8 +42,11 @@
     &__icon {
       @include UiBorderRadius(sm);
       @include UiPadding(xxxs);
-      background-color: UiColor(main);
-      color: UiColor(shade-100);
+
+      @include UiTheme() {
+        background-color: UiColor(main);
+        color: UiColor(shade-100);
+      }
     }
 
     &__text {

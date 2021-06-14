@@ -37,7 +37,10 @@
 <style scoped lang="scss">
   .ui-card {
     @include UiBorderRadius(md);
-    background-color: UiColor(shade-100);
+
+    @include UiTheme() {
+      background-color: UiColor(shade-200);
+    }
 
     &_shadow-0 {
       box-shadow: UiShadow(0);

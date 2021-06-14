@@ -369,7 +369,10 @@
     &_has-card-bg {
       @include UiBorderRadius(sm);
       box-shadow: UiShadow(1);
-      background-color: UiColor(shade-100);
+
+      @include UiTheme() {
+        background-color: UiColor(shade-200);
+      }
     }
 
     &_side-bottom {

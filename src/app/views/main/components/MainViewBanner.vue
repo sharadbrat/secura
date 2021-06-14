@@ -143,7 +143,9 @@
     }
 
     &__card-paragraph {
-      color: UiColor(shade-700);
+      @include UiTheme() {
+        color: UiColor(shade-700);
+      }
     }
 
     &__start-button {

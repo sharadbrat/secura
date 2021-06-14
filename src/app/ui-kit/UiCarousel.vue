@@ -74,7 +74,6 @@
     }
 
     &__control {
-      $backbround-color-base: UiColor(shade-900);
       $size: $grid-step * 10;
       @include UiButtonAppearance();
       @include UiButtonStates(false);
@@ -90,11 +89,15 @@
       top: 50%;
       transform: translateY(-50%);
 
-      background-color: rgba($backbround-color-base, 0.4);
-      color: UiColor(shade-100);
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);;
       border-radius: 50%;
       z-index: 1;
+
+      @include UiTheme() {
+        $backbround-color-base: UiColor(shade-900);
+        background-color: rgba($backbround-color-base, 0.4);
+        color: UiColor(shade-100);
+      }
 
       &::after {
         border-radius: 50%;

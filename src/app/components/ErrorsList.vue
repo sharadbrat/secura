@@ -27,9 +27,13 @@
   .errors-list {
     @include UiPadding(sm);
     @include UiBorderRadius(md);
-    color: UiColor(negative);
-    border: 1px solid UiColor(negative);
+
     width: 100%;
+
+    @include UiTheme() {
+      color: UiColor(negative);
+      border: 1px solid UiColor(negative);
+    }
 
     &__item {
       @include UiMargin(sm, left);

@@ -302,19 +302,25 @@
     &__overlay-icon {
       @include UiMargin(md, bottom);
       @include UiPadding(sm);
-      background-color: UiColor(shade-100);
       $size: $grid-step * 20;
       width: $size;
       height: $size;
       border-radius: $size / 2;
+
+      @include UiTheme() {
+        background-color: UiColor(shade-100);
+      }
     }
 
     &__dialog-description {
       @include UiPadding(xs);
       @include UiMargin(sm, top);
       @include UiBorderRadius(sm);
-      background-color: UiColor(neutral-light);
-      color: UiColor(neutral-dark);
+
+      @include UiTheme() {
+        background-color: UiColor(neutral-light);
+        color: UiColor(neutral-dark);
+      }
     }
 
     &__empty {

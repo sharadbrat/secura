@@ -16,5 +16,6 @@
     "theme_color": "#29b6f6",
     "background_color": "#29b6f6",
     "start_url": "https://secura.netlify.app",
-    "display": "standalone"
+    "display": "standalone",
+    "description": "Secura: Headless password manager"
 }

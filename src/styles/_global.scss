@@ -1,12 +1,19 @@
 html {
   @include UiTypographyParagraph();
   font-family: 'Roboto', $font-fallback;
-  color: UiColor(shade-800);
 }
 
 html, body, #app {
   height: 100%;
   overscroll-behavior-y: none;
+}
+
+#app {
+  overflow: auto;
+  @include UiThemeElement() {
+    color: UiColor(shade-800);
+    background-color: UiColor(shade-100);
+  }
 }
 
 a:not(.ui-link-reset) {
