@@ -8,7 +8,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint --no-fix",
     "size": "npm run build && size-limit",
-    "test": "npm run lint && vue-cli-service test:unit -- test --require test/setup.ts"
+    "test": "npm run lint && vue-cli-service test:unit -- test --require test/setup.ts",
+    "create-pwa": "create-pwa --icon=\"public/assets/icon.png\" --launch=\"public/assets/splash-screen.png\""
   },
   "dependencies": {
     "@sentry/browser": "5.15.4",
@@ -49,6 +50,7 @@
     "@vue/test-utils": "1.0.0-beta.33",
     "babel-eslint": "10.0.1",
     "chai": "4.2.0",
+    "create-pwa": "2.3.1",
     "eslint": "5.16.0",
     "eslint-plugin-unused-imports": "0.1.2",
     "eslint-plugin-vue": "5.0.0",

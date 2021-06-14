@@ -16,4 +16,5 @@ module.exports = {
     disableHostCheck: true,
   },
   lintOnSave: 'warning',
+  filenameHashing: false,
 };
