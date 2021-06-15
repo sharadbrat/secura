@@ -24,6 +24,8 @@ export class SetMasterKeyUseCase implements UseCase {
 
     if (isStored) {
       this.persistenceService.storeValue(PersistenceServiceValueName.MASTER_KEY, masterKeyHash);
+    } else {
+      this.persistenceService.clearValue(PersistenceServiceValueName.MASTER_KEY);
     }
 
     this.store.commit('keys/setMasterKey', masterKeyHash);
