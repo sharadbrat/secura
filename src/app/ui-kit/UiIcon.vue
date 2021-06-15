@@ -13,8 +13,6 @@
   import Vue from 'vue';
   import { Component, Prop } from 'vue-property-decorator';
 
-  type IconName = 'search' | 'date' | 'time' | 'close' | 'done' | 'arrow-down' | 'more';
-
   type IconSize = 'sm' | 'md' | 'lg';
 
   /**
@@ -27,7 +25,7 @@
 
     private static readonly defaultSize = 'md';
 
-    @Prop() public name: IconName;
+    @Prop() public name: string;
 
     @Prop() public size: IconSize;
 

@@ -8,6 +8,7 @@
           class="banner__card-image"
           src="assets/illustrations/secure.svg"
           mode="contain"
+          alt="Secure illustration"
         />
         <h3 class="banner__card-heading">Secure</h3>
         <p class="banner__card-paragraph">
@@ -20,6 +21,7 @@
           class="banner__card-image"
           src="assets/illustrations/download.svg"
           mode="contain"
+          alt="On-device illustration"
         />
         <h3 class="banner__card-heading">On-device</h3>
         <p class="banner__card-paragraph">
@@ -32,6 +34,7 @@
           class="banner__card-image"
           src="assets/illustrations/install.svg"
           mode="contain"
+          alt="Installable illustration"
         />
         <h3 class="banner__card-heading">Installable</h3>
         <p class="banner__card-paragraph">

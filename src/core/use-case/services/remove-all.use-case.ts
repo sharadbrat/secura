@@ -20,8 +20,10 @@ export class RemoveAllUseCase implements UseCase {
     this.servicesRepository.deleteAll();
     this.persistenceService.clearValue(PersistenceServiceValueName.MASTER_KEY);
     this.persistenceService.clearValue(PersistenceServiceValueName.THEME);
-    const swCacheIsDeleted = await caches.delete('secura-cache');
-    console.log(`Service worker cache is deleted: ${swCacheIsDeleted}!`);
+
+    const cacheKeys = await caches.keys();
+    await Promise.all(cacheKeys.map(el => caches.delete(el)));
+
     this.store.commit('keys/removeKey', null);
   }
 

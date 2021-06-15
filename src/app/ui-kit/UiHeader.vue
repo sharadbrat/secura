@@ -246,7 +246,7 @@
       transition: transform ease-out 300ms;
 
       @include UiTheme() {
-        background-color: UiColor(shade-100);
+        background-color: UiColor(shade-200);
       }
     }
 

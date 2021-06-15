@@ -86,6 +86,23 @@
         <h2 class="settings-view__heading">Danger zone</h2>
 
         <div class="settings-view__danger-zone">
+          <h3 class="settings-view__subheading">Clear caches</h3>
+          <p class="settings-view__description">
+            All data will remain, only cached application data will be purged
+            (execution files, images, fonts). After, the application will be
+            reloaded and the cache will be created again.
+          </p>
+          <UiButton
+            class="settings-view__delete"
+            size="sm"
+            type="secondary"
+            @click="onClearCachesClick()"
+          >
+            <span>Clear all caches</span>
+          </UiButton>
+
+          <hr class="settings-view__danger-zone-delimiter"/>
+
           <h3 class="settings-view__subheading">Delete services</h3>
           <p class="settings-view__description">
             Theme settings and the master key will remain, only saved services
@@ -201,6 +218,7 @@
   import { NotificationService } from '@/core/service/notification/notification.service';
   import { download } from '@/core/utils/download';
   import { Theme } from '@/core/entity/theme';
+  import { PersistenceService, PersistenceServiceValueName } from '@/core/service/persistence/persistence.service';
 
   import SecondLevelLayout from '@/app/layouts/SecondLevelLayout.vue';
   import UiButton from '@/app/ui-kit/UiButton.vue';
@@ -244,6 +262,9 @@
 
     @LazyInject(NotificationService)
     public notificationService: NotificationService;
+
+    @LazyInject(PersistenceService)
+    public persistenceService: PersistenceService;
 
     @Ref()
     public masterKeyDialog: SetupMasterKeyDialog;
@@ -388,6 +409,13 @@
 
     public async onThemeChange(theme: Theme) {
       await this.setThemeUseCase.perform(theme);
+    }
+
+    public async onClearCachesClick() {
+      const cacheKeys = await caches.keys();
+      await Promise.all(cacheKeys.map(el => caches.delete(el)));
+      this.persistenceService.clearValue(PersistenceServiceValueName.MASTER_KEY);
+      window.location.reload();
     }
 
   }

@@ -64,6 +64,8 @@ module.exports = {
     appleMobileWebAppCapable: 'yes',
     workboxOptions: {
       navigateFallback: 'index.html',
+      inlineWorkboxRuntime: true,
+      cacheId: 'secura-cache',
     },
   },
 };
