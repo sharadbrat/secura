@@ -45,8 +45,8 @@
 
       @include UiTheme() {
         background-color: UiColor(main);
-        color: UiColor(shade-100);
       }
+      color: UiColor(shade-100);
     }
 
     &__text {

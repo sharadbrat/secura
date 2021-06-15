@@ -322,13 +322,14 @@
     &__image-menu-heading {
       @include UiTypographyBody2();
       @include UiMargin(sm, bottom);
-      @include UiPadding(sm, top);
+      @include UiMargin(sm, top);
+      display: block;
+
     }
 
     &__image-menu-list {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
     }
 
   }

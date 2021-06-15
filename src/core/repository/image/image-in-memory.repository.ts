@@ -203,12 +203,6 @@ const ALL_IMAGES: ImageEntity[] = [
     url: 'assets/service-icons/logo-microsoft.svg',
     type: 'logo',
   }),
-  new ImageEntity({
-    id: 'logo-uber',
-    name: 'Uber',
-    url: 'assets/service-icons/logo-uber.svg',
-    type: 'logo',
-  }),
 
   // EMOJIS
 

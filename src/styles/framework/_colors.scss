@@ -1,6 +1,3 @@
-$colors: () !default;
-
-
 $themes: (
   "dark": (
     "positive-light": #008F7C,
@@ -67,6 +64,9 @@ $themes: (
     "shade-100": #FFFFFF,
   ),
 );
+
+
+$colors: map_get($themes, light) !default;
 
 
 @function UiColor($name) {

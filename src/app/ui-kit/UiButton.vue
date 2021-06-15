@@ -113,9 +113,10 @@
     &_type-primary {
       @include UiButtonStates(false);
 
+      color: UiColor(shade-100);
+
       @include UiTheme() {
         background-color: UiColor(main);
-        color: UiColor(shade-100);
       }
 
       &:disabled {

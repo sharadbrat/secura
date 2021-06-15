@@ -291,8 +291,11 @@
       width: calc(100% + #{$outer-space * 2});
       height: calc(100% + #{$outer-space * 2});
 
-      background-color: rgba(0,0,0, 0.1);
       backdrop-filter: blur(5px);
+
+      @include UiTheme() {
+        background-color: rgba(UiColor(shade-900), 0.1);
+      }
     }
 
     &__container-wrapper {
