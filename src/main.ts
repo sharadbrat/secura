@@ -10,6 +10,9 @@ import { container } from '@/core/ioc';
 // include global styles
 import './styles/main.scss';
 
+// include service worker
+import './registerServiceWorker';
+
 
 (function initApp() {
   Vue.config.productionTip = false;
