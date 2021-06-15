@@ -9,40 +9,10 @@
     <meta name="desctiption" content="Secure on-device password manager"/>
     <meta name="keywords" content="password,secure,manager,password manager,secura,offline"/>
 
-    <!-- Favicons and meta tags from `npm run create-pwa` -->
-    <link rel="manifest" href="<%= BASE_URL %>assets/manifest.json">
-
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="57x57" href="<%= BASE_URL %>assets/favicons/apple-touch-icon-57x57.png" />
-    <link rel="apple-touch-icon" sizes="60x60" href="<%= BASE_URL %>assets/favicons/apple-touch-icon-60x60.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="<%= BASE_URL %>assets/favicons/apple-touch-icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="76x76" href="<%= BASE_URL %>assets/favicons/apple-touch-icon-76x76.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="<%= BASE_URL %>assets/favicons/apple-touch-icon-114x114.png" />
-    <link rel="apple-touch-icon" sizes="120x120" href="<%= BASE_URL %>assets/favicons/apple-touch-icon-120x120.png" />
-    <link rel="apple-touch-icon" sizes="144x144" href="<%= BASE_URL %>assets/favicons/apple-touch-icon-144x144.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="<%= BASE_URL %>assets/favicons/apple-touch-icon-152x152.png" />
-    <link rel="mask-icon" href="<%= BASE_URL %>assets/safari-pinned-tab.svg" color="#29b6f6">
-    <link rel="icon" type="image/png" href="<%= BASE_URL %>assets/favicons/favicon-196x196.png" sizes="196x196" />
-    <link rel="icon" type="image/png" href="<%= BASE_URL %>assets/favicons/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/png" href="<%= BASE_URL %>assets/favicons/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="<%= BASE_URL %>assets/favicons/favicon-16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="<%= BASE_URL %>assets/favicons/favicon-128x128.png" sizes="128x128" />
+    <!-- Favicons, meta tags, other is injected with vue.config.js -->
     <link rel="shortcut icon" type="image/x-icon" href="<%= BASE_URL %>assets/favicons/favicon.ico" />
-    <meta name="msapplication-TileImage" content="<%= BASE_URL %>assets/favicons/ms-tile-144x144.png" />
-    <meta name="msapplication-square70x70logo" content="<%= BASE_URL %>assets/favicons/ms-tile-70x70.png" />
-    <meta name="msapplication-square150x150logo" content="<%= BASE_URL %>assets/favicons/ms-tile-150x150.png" />
-    <meta name="msapplication-square310x310logo" content="<%= BASE_URL %>assets/favicons/ms-tile-310x310.png" />
-
-    <!-- Meta tags -->
-    <meta name="theme-color" content="#29b6f6" />
-    <meta name="msapplication-TileColor" content="#29b6f6" />
     <meta name="application-name" content="Secura" />
-    <meta name="apple-mobile-web-app-title" content="Secura">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="msapplication-config" content="<%= BASE_URL %>assets/config.xml" />
-
-    <!-- Splash screens -->
     <link rel="apple-touch-startup-image" href="<%= BASE_URL %>assets/launch-screens/launch-screen-2048x2732.png" media="(device-width: 2048px) and (device-height: 2732px) and (orientation: portrait)" />
     <link rel="apple-touch-startup-image" href="<%= BASE_URL %>assets/launch-screens/launch-screen-1668x2388.png" media="(device-width: 1668px) and (device-height: 2388px) and (orientation: portrait)" />
     <link rel="apple-touch-startup-image" href="<%= BASE_URL %>assets/launch-screens/launch-screen-1668x2224.png" media="(device-width: 1668px) and (device-height: 2224px) and (orientation: portrait)" />
@@ -63,24 +33,5 @@
   </head>
   <body>
     <div id="app"></div>
-
-    <script>
-      const env = '<%= NODE_ENV %>';
-
-      if (env === 'production') {
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-            navigator.serviceWorker.register('<%= BASE_URL %>assets/service-worker.js').then(
-              () => {
-                console.log('ServiceWorker registration successful');
-              },
-              () => {
-                console.log(`ServiceWorker registration failed: ${arguments[0]}`);
-              }
-            );
-          });
-        }
-      }
-    </script>
   </body>
 </html>

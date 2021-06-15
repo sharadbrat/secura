@@ -1,15 +1,14 @@
 {
   "name": "secura",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "start": "npm run serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint --no-fix",
     "size": "npm run build && size-limit",
-    "test": "npm run lint && vue-cli-service test:unit -- test --require test/setup.ts",
-    "create-pwa": "create-pwa --icon=\"public/assets/icon.png\" --launch=\"public/assets/splash-screen.png\""
+    "start": "npm run serve",
+    "test": "npm run lint && vue-cli-service test:unit -- test --require test/setup.ts"
   },
   "dependencies": {
     "@sentry/browser": "5.15.4",
@@ -24,6 +23,7 @@
     "inversify-inject-decorators": "3.1.0",
     "nanoid": "2.1.11",
     "reflect-metadata": "0.1.13",
+    "register-service-worker": "1.7.1",
     "vue": "2.6.10",
     "vue-class-component": "7.1.0",
     "vue-property-decorator": "8.3.0",
@@ -40,6 +40,7 @@
     "@types/sinon-chai": "3.2.4",
     "@vue/cli-plugin-babel": "3.11.0",
     "@vue/cli-plugin-eslint": "4.2.3",
+    "@vue/cli-plugin-pwa": "4.5.13",
     "@vue/cli-plugin-typescript": "4.5.13",
     "@vue/cli-plugin-unit-mocha": "4.3.1",
     "@vue/cli-service": "4.2.3",
@@ -48,7 +49,6 @@
     "@vue/test-utils": "1.0.0-beta.33",
     "babel-eslint": "10.0.1",
     "chai": "4.2.0",
-    "create-pwa": "2.3.1",
     "eslint": "5.16.0",
     "eslint-plugin-unused-imports": "0.1.2",
     "eslint-plugin-vue": "5.0.0",
