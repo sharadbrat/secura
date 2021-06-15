@@ -65,7 +65,6 @@ module.exports = {
     workboxOptions: {
       navigateFallback: 'index.html',
       inlineWorkboxRuntime: true,
-      cacheId: 'secura-cache',
     },
   },
 };
