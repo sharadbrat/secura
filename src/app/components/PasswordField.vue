@@ -17,10 +17,11 @@
 
     <UiButton
       class="password-field__button"
-      :size="smallerSize"
       shape="circled"
       type="subdued"
       width="shrink"
+      :aria-label="isPasswordShown ? 'Hide' : 'Show'"
+      :size="smallerSize"
       :disabled="isShowDisabled"
       @click="isPasswordShown = !isPasswordShown"
     >

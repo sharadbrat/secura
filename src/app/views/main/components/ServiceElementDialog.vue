@@ -81,13 +81,15 @@
           v-for="image in logos"
           :key="image.id"
           class="service-element-dialog__image-button"
-          :type="image === selectedImage ? 'secondary' : 'transparent'"
           width="shrink"
           shape="circled"
+          :type="image === selectedImage ? 'secondary' : 'transparent'"
+          :aria-label="image.name"
           @click="onImageSelect(image)"
         >
           <UiResponsiveImage
             class="service-element-dialog__image"
+            :alt="image.name"
             :src="image.url"
           />
         </UiButton>
@@ -99,13 +101,15 @@
           v-for="image in emojis"
           :key="image.id"
           class="service-element-dialog__image-button"
-          :type="image === selectedImage ? 'secondary' : 'transparent'"
           width="shrink"
           shape="circled"
+          :type="image === selectedImage ? 'secondary' : 'transparent'"
+          :aria-label="image.name"
           @click="onImageSelect(image)"
         >
           <UiResponsiveImage
             class="service-element-dialog__image"
+            :alt="image.name"
             :src="image.url"
           />
         </UiButton>
