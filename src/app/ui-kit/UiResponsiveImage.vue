@@ -5,7 +5,7 @@
       :style="[fakeInlineStyle]"
       :class="[backgroundModeClass]"
     />
-    <img class="ui-responsive-image__img" :src="src"/>
+    <img class="ui-responsive-image__img" :src="src" :alt="alt"/>
   </div>
 </template>
 
@@ -30,6 +30,8 @@
     private static readonly defaultBackgroundMode = 'contain';
 
     @Prop() public src?: string;
+
+    @Prop() public alt?: string;
 
     @Prop() public mode?: UiResponsiveImageBackgroundMode;
 
