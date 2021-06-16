@@ -185,7 +185,9 @@
       }
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.05);
+        @include UiTheme() {
+          background-color: rgba(UiColor(shade-900), 0.05);
+        }
       }
 
       &:active {

@@ -23,9 +23,9 @@ module.exports = {
     manifestOptions: {
       name: 'Secura',
       short_name: 'Secura',
-      start_url: 'https://secura.netlify.app',
+      start_url: 'https://secura.netlify.app/',
       description: 'Secura: Headless password manager',
-      display: 'standalone',
+      display: 'fullscreen',
       orientation: 'portrait',
       theme_color: '#29b6f6',
       background_color: '#29b6f6',
