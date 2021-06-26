@@ -8,6 +8,7 @@ import PassThrough from '@/app/components/PassThrough.vue';
 
 import MainView from '@/app/views/main/MainView.vue';
 import AboutView from '@/app/views/about/AboutView.vue';
+import ChangelogView from '@/app/views/changelog/ChangelogView.vue';
 import SettingsView from '@/app/views/settings/SettingsView.vue';
 
 export class ApplicationRouter {
@@ -50,6 +51,11 @@ export class ApplicationRouter {
               path: 'about',
               name: 'about',
               component: AboutView,
+            },
+            {
+              path: 'changelog',
+              name: 'changelog',
+              component: ChangelogView,
             },
           ],
         },

@@ -12,6 +12,7 @@
         Installable web app that stores your services and derives passwords for
         them from their names. It does not use a server to store and access
         data, everything happens on your device!
+        <router-link to="changelog">View changelog</router-link>.
       </p>
 
       <UiButton
