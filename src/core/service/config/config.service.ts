@@ -35,10 +35,10 @@ export interface FrontendConfig {
 export abstract class ConfigService {
 
   /**
-   * @method getFrontendConfig
+   * @get frontendConfig
    * @return FrontendConfig
    * @public
    */
-  public abstract getFrontendConfig(): FrontendConfig;
+  public abstract get frontendConfig(): FrontendConfig;
 
 }

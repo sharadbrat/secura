@@ -7,15 +7,6 @@ import { injectable } from 'inversify';
  */
 export interface Environment {
   base: string;
-
-  users: {
-    login: string;
-    register: string;
-    me: string;
-    oauth: string;
-    sendRestorePassword: string;
-  };
-
 }
 
 

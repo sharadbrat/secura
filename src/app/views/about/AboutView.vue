@@ -14,15 +14,24 @@
         data, everything happens on your device!
       </p>
 
+      <UiButton
+        v-if="canShare"
+        size="sm"
+        type="secondary"
+        @click="onShareClick()"
+      >
+        Share
+        <UiIcon class="about-view__button-icon" name="share"/>
+      </UiButton>
+
       <h2 class="about-view__heading">Author</h2>
 
       <div class="about-view__row">
         <UiResponsiveImage class="about-view__image" src="assets/illustrations/me.jpeg"/>
         <p class="about-view__paragraph">
           My name is Georgii Sharadze. I am a software engineer and frontend
-          developer from Russia. I like talking about technologies and make
-          useful apps like this. My hobbies are mountain skiing, BMX, and
-          programming.
+          developer from Russia. I like technologies and make useful apps like
+          Secura. My hobbies are mountain skiing, BMX, and programming.
         </p>
       </div>
 
@@ -47,7 +56,12 @@
   import Vue from 'vue';
   import { Component } from 'vue-property-decorator';
 
+  import { LazyInject } from '@/core/ioc';
+  import { ConfigService } from '@/core/service/config/config.service';
+
   import UiLogo from '@/app/ui-kit/UiLogo.vue';
+  import UiButton from '@/app/ui-kit/UiButton.vue';
+  import UiIcon from '@/app/ui-kit/UiIcon.vue';
   import UiResponsiveImage from '@/app/ui-kit/UiResponsiveImage.vue';
   import SecondLevelLayout from '@/app/layouts/SecondLevelLayout.vue';
 
@@ -57,12 +71,32 @@
       SecondLevelLayout,
       UiLogo,
       UiResponsiveImage,
+      UiButton,
+      UiIcon,
     },
   })
   export default class AboutView extends Vue {
 
+    @LazyInject(ConfigService)
+    private configService: ConfigService;
+
+    public get canShare(): boolean {
+      // any is hack that allows typescript to compile this
+      const nav = navigator as any;
+      return Boolean(nav.canShare && nav.canShare());
+    }
+
     public get appVersion(): string {
       return process.env.VUE_APP_VERSION;
+    }
+
+    public onShareClick() {
+      // any is hack that allows typescript to compile this
+      (navigator as any).share({
+        url: this.configService.frontendConfig.rootUrl,
+        text: 'Headless password manager.',
+        title: 'Secura',
+      });
     }
 
   }
@@ -77,6 +111,7 @@
     &__heading {
       @include UiTypographyHeading3();
       @include UiMargin(md, bottom);
+      @include UiMargin(md, top);
     }
 
     &__subheading {
@@ -119,6 +154,10 @@
       @include UiMediaMobile() {
         flex-direction: column;
       }
+    }
+
+    &__button-icon {
+      @include UiMargin(xxs, left);
     }
 
   }

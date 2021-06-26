@@ -81,16 +81,9 @@ export class NetworkServiceHttpImpl extends NetworkService {
   }
 
   private getEnvironment(): Environment {
-    const frontConfig = this.configService.getFrontendConfig();
+    const frontConfig = this.configService.frontendConfig;
     return {
       base: frontConfig.apiGateway,
-      users: {
-        me: '/users',
-        login: '/users/login',
-        register: '/users/register',
-        oauth: '/users/oauth',
-        sendRestorePassword: '/users/send_restore',
-      },
     };
   }
 

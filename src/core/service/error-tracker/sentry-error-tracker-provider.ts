@@ -53,7 +53,7 @@ export class ErrorTrackerProviderSentryImpl extends ErrorTrackerProvider {
     }
 
     return this.fetchSentryBundle().then(sentry => {
-      const config = this.configService.getFrontendConfig();
+      const config = this.configService.frontendConfig;
       const sentryTrackingConfig = config.trackingConfig.sentry!;
       this.sentry = sentry;
       this.sentry.init(sentryTrackingConfig);

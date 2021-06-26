@@ -29,7 +29,7 @@ export class GaTrackerServiceImpl extends TrackerService {
   public constructor(@inject(ConfigService) private configService: ConfigService) {
     super();
 
-    const config = this.configService.getFrontendConfig();
+    const config = this.configService.frontendConfig;
 
     if (!config.trackingConfig.ga || !config.trackingConfig.ga.resourseId) {
       throw new GAInitializationError('config error');

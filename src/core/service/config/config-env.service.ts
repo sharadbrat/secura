@@ -10,16 +10,16 @@ import { ConfigService, FrontendConfig } from '@/core/service/config/config.serv
 @injectable()
 export class ConfigServiceEnvImpl extends ConfigService {
 
-  public getFrontendConfig(): FrontendConfig {
-    return this.frontendConfig;
+  public get frontendConfig(): FrontendConfig {
+    return this.frontendConfigInternal;
   }
 
 
   /**
-   * @property {FrontendConfig} frontendConfig
+   * @property {FrontendConfig} frontendConfigInternal
    * @private
    */
-  private readonly frontendConfig: FrontendConfig = {
+  private readonly frontendConfigInternal: FrontendConfig = Object.freeze({
     apiGateway: process.env.VUE_APP_API_GATEWAY,
     rootUrl: process.env.VUE_APP_ROOT_URL,
     trackingConfig: {
@@ -36,6 +36,6 @@ export class ConfigServiceEnvImpl extends ConfigService {
         client_id: process.env.VUE_APP_GOOGLE_API_CLIENT_ID,
       },
     },
-  };
+  });
 
 }
