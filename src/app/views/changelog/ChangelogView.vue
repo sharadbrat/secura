@@ -6,6 +6,12 @@
       <UiLogo tag="span"/>
       <span class="changelog-view__version">{{appVersion}}</span>
 
+      <h2 class="changelog-view__heading">v0.4.0</h2>
+
+      <ul class="changelog-view__list">
+        <li class="changelog-view__list-item">Added "copy to clipboard" option in Export & Import menu.</li>
+      </ul>
+
       <h2 class="changelog-view__heading">v0.3.0</h2>
 
       <ul class="changelog-view__list">

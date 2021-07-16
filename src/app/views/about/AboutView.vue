@@ -84,7 +84,7 @@
     public get canShare(): boolean {
       // any is hack that allows typescript to compile this
       const nav = navigator as any;
-      return Boolean(nav.canShare && nav.canShare());
+      return Boolean(nav.share);
     }
 
     public get appVersion(): string {
@@ -93,7 +93,8 @@
 
     public onShareClick() {
       // any is hack that allows typescript to compile this
-      (navigator as any).share({
+      const nav = navigator as any;
+      nav.share({
         url: this.configService.frontendConfig.rootUrl,
         text: 'Headless password manager.',
         title: 'Secura',

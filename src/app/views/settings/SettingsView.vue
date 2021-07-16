@@ -157,7 +157,7 @@
         title="Import"
         ref="importDialog"
         @primary-button-click="onImportConfirm()"
-        @secondary-button-click="importEncryptionKey = ''"
+        @secondary-button-click="importEncryptionKey = ''; importedDataFromClipboard = ''"
       >
         <template slot="body">
           <span class="settings-view__import-label" id="import-encryption-key">Encryption key</span>
@@ -169,15 +169,42 @@
             aria-labelledby="import-encryption-key"
           />
 
-          <span class="settings-view__import-label" id="data-file">Data file</span>
-          <input
-            class="settings-view__import-file"
-            type="file"
-            ref="upload"
-            accept=".txt"
-            aria-labelledby="data-file"
-            @change="onUploadFile"
-          />
+          <UiRadio
+            class="settings-view__export-radio"
+            :value="importOptions.CLIPBOARD"
+            :model="importOption"
+            @change="importOption = importOptions.CLIPBOARD"
+          >
+            Import copied text
+          </UiRadio>
+          <UiRadio
+            class="settings-view__export-radio"
+            :value="importOptions.FILE"
+            :model="importOption"
+            @change="importOption = importOptions.FILE"
+          >
+            Import file
+          </UiRadio>
+
+          <div v-if="importOption === importOptions.FILE">
+            <span class="settings-view__import-label" id="data-file">Data file</span>
+            <input
+              class="settings-view__import-file"
+              type="file"
+              ref="upload"
+              accept=".txt"
+              aria-labelledby="data-file"
+              @change="onUploadFile"
+            />
+          </div>
+          <div v-else>
+            <span class="settings-view__import-label" id="data-file">Data</span>
+            <UiInput
+              size="sm"
+              placeholder="(copied data)"
+              v-model="importedDataFromClipboard"
+            />
+          </div>
         </template>
       </UiDialog>
 
@@ -196,6 +223,23 @@
             type="password"
             aria-labelledby="export-encryption-key"
           />
+
+          <UiRadio
+            class="settings-view__export-radio"
+            :value="importOptions.CLIPBOARD"
+            :model="importOption"
+            @change="importOption = importOptions.CLIPBOARD"
+          >
+            Export as text (copy to clipboard)
+          </UiRadio>
+          <UiRadio
+            class="settings-view__export-radio"
+            :value="importOptions.FILE"
+            :model="importOption"
+            @change="importOption = importOptions.FILE"
+          >
+            Export as file
+          </UiRadio>
         </template>
       </UiDialog>
 
@@ -217,6 +261,7 @@
   import { SetThemeUseCase } from '@/core/use-case/theme/set-theme.use-case';
   import { NotificationService } from '@/core/service/notification/notification.service';
   import { download } from '@/core/utils/download';
+  import { copyTextToClipboard } from '@/core/utils/clipboard';
   import { Theme } from '@/core/entity/theme';
   import { PersistenceService, PersistenceServiceValueName } from '@/core/service/persistence/persistence.service';
 
@@ -227,6 +272,12 @@
   import UiDialog from '@/app/ui-kit/UiDialog.vue';
   import UiInput from '@/app/ui-kit/UiInput.vue';
   import SetupMasterKeyDialog from '@/app/components/SetupMasterKeyDialog.vue';
+
+
+  enum ImportOption {
+    FILE = 'file',
+    CLIPBOARD = 'clipboard',
+  }
 
 
   @Component({
@@ -290,13 +341,17 @@
     @State(state => state.themes.theme)
     public theme: Theme;
 
-    public themes = Theme;
+    public readonly themes = Theme;
+
+    public readonly importOptions = ImportOption;
 
     public importEncryptionKey: string = '';
 
+    public importedDataFromClipboard: string = '';
+
     public importDataFile: File = null;
 
-    private isEditingMasterKey: boolean = false;
+    public importOption: ImportOption = ImportOption.CLIPBOARD;
 
     public onSetupMasterKeyClick() {
       this.masterKeyDialog.show();
@@ -356,20 +411,38 @@
     }
 
     public async onImportConfirm() {
-      if (!this.importDataFile) {
-        this.notificationService.show({
-          type: 'error',
-          text: 'Please, provide the data file!',
-        });
+      let cypher = '';
+
+      if (this.importOption === ImportOption.CLIPBOARD) {
+        if (!this.importedDataFromClipboard) {
+          this.notificationService.show({
+            type: 'error',
+            text: 'Please, provide the data !',
+          });
+          return;
+        }
+        cypher = this.importedDataFromClipboard;
+      } else {
+        if (!this.importDataFile) {
+          this.notificationService.show({
+            type: 'error',
+            text: 'Please, provide the data file!',
+          });
+          return;
+        }
+        cypher = await (this.importDataFile as any).text();
       }
 
       try {
-        const cypher = await (this.importDataFile as any).text();
         await this.importUseCase.perform(cypher, this.importEncryptionKey);
 
         this.importEncryptionKey = '';
         this.importDataFile = null;
-        this.upload.value = null;
+        if (this.importOption === ImportOption.CLIPBOARD) {
+          this.importedDataFromClipboard = '';
+        } else {
+          this.upload.value = null;
+        }
 
         this.notificationService.show({
           type: 'info',
@@ -383,7 +456,11 @@
 
         this.importEncryptionKey = '';
         this.importDataFile = null;
-        this.upload.value = null;
+        if (this.importOption === ImportOption.CLIPBOARD) {
+          this.importedDataFromClipboard = '';
+        } else {
+          this.upload.value = null;
+        }
       }
     }
 
@@ -395,8 +472,24 @@
     public async onExportConfirm() {
       try {
         const cypher = await this.exportUseCase.perform(this.importEncryptionKey);
-        download('secura-services-list', cypher);
         this.importEncryptionKey = '';
+
+        // download file
+        if (this.importOption === ImportOption.FILE) {
+          download('secura-services-list', cypher);
+          return;
+        }
+
+        // copy to clipboard
+        const isSuccess = copyTextToClipboard(cypher);
+        if (!isSuccess) {
+          throw new Error('Could not copy data to clipboard');
+        }
+
+        this.notificationService.show({
+          type: 'info',
+          text: 'Copied data to clipboard!',
+        });
       } catch (error) {
         this.notificationService.show({
           type: 'error',
@@ -516,6 +609,10 @@
       @include UiMargin(xxs, bottom);
       @include UiMargin(sm, top);
       display: block;
+    }
+
+    &__export-radio {
+      @include UiMargin(xxs, top);
     }
 
     &__theme-radio {
