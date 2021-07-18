@@ -53,7 +53,7 @@ export class ApplicationRouter {
               component: AboutView,
             },
             {
-              path: 'changelog',
+              path: 'about/changelog',
               name: 'changelog',
               component: ChangelogView,
             },

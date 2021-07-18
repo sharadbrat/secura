@@ -6,6 +6,13 @@
       <UiLogo tag="span"/>
       <span class="changelog-view__version">{{appVersion}}</span>
 
+      <h2 class="changelog-view__heading">v0.4.1</h2>
+
+      <ul class="changelog-view__list">
+        <li class="changelog-view__list-item">Added smooth transitions between pages.</li>
+        <li class="changelog-view__list-item">Added smooth animation when changing color theme.</li>
+      </ul>
+
       <h2 class="changelog-view__heading">v0.4.0</h2>
 
       <ul class="changelog-view__list">

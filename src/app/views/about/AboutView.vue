@@ -12,7 +12,7 @@
         Installable web app that stores your services and derives passwords for
         them from their names. It does not use a server to store and access
         data, everything happens on your device!
-        <router-link to="changelog">View changelog</router-link>.
+        <router-link to="about/changelog">View changelog</router-link>.
       </p>
 
       <UiButton
@@ -47,6 +47,10 @@
         </a>
         <br/>
         Telegram: <a title="sharadbrat" href="https://t.me/sharadbrat" target="_blank">sharadbrat</a>
+      </p>
+
+      <p class="about-view__paragraph">
+        Illustrations by <a title="undraw.co" href="https://undraw.co/" target="_blank">undraw.co</a>.
       </p>
 
     </div>

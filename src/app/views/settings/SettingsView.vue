@@ -389,7 +389,7 @@
       } catch (error) {
         this.notificationService.show({
           type: 'error',
-          text: `Could not delete services, reason: ${error.message}.`,
+          text: `Could not delete services, reason: ${error.message}!`,
         });
       }
     }
@@ -417,7 +417,7 @@
         if (!this.importedDataFromClipboard) {
           this.notificationService.show({
             type: 'error',
-            text: 'Please, provide the data !',
+            text: 'Please, provide the data!',
           });
           return;
         }
@@ -493,7 +493,7 @@
       } catch (error) {
         this.notificationService.show({
           type: 'error',
-          text: `Could not export data, reason: ${error.message}`,
+          text: `Could not export data, reason: ${error.message}!`,
         });
 
         this.importEncryptionKey = '';

@@ -10,6 +10,7 @@ html, body, #app {
 
 #app {
   overflow: auto;
+  transition: color linear 100ms, background-color linear 100ms;
   @include UiThemeElement() {
     color: UiColor(shade-800);
     background-color: UiColor(shade-100);

@@ -6,3 +6,15 @@ $transitions: (
 @function UiTransition($name: 'default') {
   @return map_get($transitions, #{$name});
 }
+
+@mixin UiInlineAnimation($duration) {
+  $name: secura-inline-#{unique-id()};
+
+  @keyframes #{$name} {
+    @content;
+  }
+
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-iteration-count: infinite;
+}
