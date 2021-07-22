@@ -79,7 +79,7 @@
 <style scoped lang="scss">
   .ui-input {
     @include UiInputAppearance();
-    width: $grid-step * 72;
+    width: $grid-step * 72; // 288px
     position: relative;
 
     &_is-block {

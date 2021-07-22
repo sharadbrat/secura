@@ -29,7 +29,12 @@
     </div>
 
     <div class="list__container-wrapper">
-      <div class="list__container">
+      <div
+        class="list__container"
+        :class="{
+          'list__container_is-blurred': !masterKey,
+        }"
+      >
         <div
           v-for="service in services"
           :key="service.id"
@@ -248,6 +253,10 @@
       flex-wrap: wrap;
       align-items: stretch;
       justify-content: stretch;
+
+      &_is-blurred {
+        filter: blur(5px);
+      }
     }
 
     &__element {
@@ -290,8 +299,6 @@
       align-items: center;
       width: calc(100% + #{$outer-space * 2});
       height: calc(100% + #{$outer-space * 2});
-
-      backdrop-filter: blur(5px);
 
       @include UiTheme() {
         background-color: rgba(UiColor(shade-900), 0.1);

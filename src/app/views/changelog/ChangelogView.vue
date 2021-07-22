@@ -6,6 +6,14 @@
       <UiLogo tag="span"/>
       <span class="changelog-view__version">{{appVersion}}</span>
 
+      <h2 class="changelog-view__heading">v0.4.2</h2>
+
+      <ul class="changelog-view__list">
+        <li class="changelog-view__list-item">Fixed the behavior of back button for anvigation.</li>
+        <li class="changelog-view__list-item">Fixed backgound blur on older browsers.</li>
+        <li class="changelog-view__list-item">Several small fixes to improve the UX on mobiles.</li>
+      </ul>
+
       <h2 class="changelog-view__heading">v0.4.1</h2>
 
       <ul class="changelog-view__list">

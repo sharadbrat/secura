@@ -4,7 +4,7 @@
     <div class="second-level-layout__header">
       <header class="second-level-layout__fixed-header">
         <div class="second-level-layout__header-container">
-          <router-link :to="backUrl">
+          <a :href="backUrl" title="Go back" @click="$event.preventDefault();$router.back();">
             <UiButton
               type="subdued"
               aria-label="Back"
@@ -14,7 +14,7 @@
             >
               <UiIcon name="arrow-left-long"/>
             </UiButton>
-          </router-link>
+          </a>
 
           <h1 class="second-level-layout__heading">
             {{title}}

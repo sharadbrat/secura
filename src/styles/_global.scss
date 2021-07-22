@@ -1,6 +1,8 @@
 html {
   @include UiTypographyParagraph();
-  font-family: 'Roboto', $font-fallback;
+  font-family: $font-fallback;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html, body, #app {

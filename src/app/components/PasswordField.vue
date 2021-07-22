@@ -100,11 +100,9 @@
 <style scoped lang="scss">
   .password-field {
 
-    @include UiMargin(xxs, right);
     position: relative;
     display: flex;
     align-items: center;
-    width: fit-content;
 
     &__input {
       @include UiPadding(xl, right);
