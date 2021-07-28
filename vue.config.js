@@ -25,7 +25,7 @@ module.exports = {
       short_name: 'Secura',
       start_url: 'https://secura.netlify.app/',
       description: 'Secura: Headless password manager',
-      display: 'fullscreen',
+      display: 'standalone',
       orientation: 'portrait',
       theme_color: '#29b6f6',
       background_color: '#29b6f6',

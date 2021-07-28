@@ -2,13 +2,19 @@
   <div
     ref="backdrop"
     class="ui-overlay ui-dialog-wrapper"
-    :class="{'ui-dialog-wrapper_is-active': isActive }"
+    :class="{
+      'ui-dialog-wrapper_is-active': isActive,
+      'ui-dialog-wrapper_is-mobile-bottom-sheet': isBottomSheetOnMobile
+    }"
     @click="onBackdropClick($event)"
   >
     <div
       class="ui-dialog"
       :class="[
-        {'ui-dialog_is-full-height': isFullHeight },
+        {
+          'ui-dialog_is-full-height': isFullHeight,
+          'ui-dialog_is-mobile-bottom-sheet': isBottomSheetOnMobile
+        },
         sizeClass,
       ]"
       role="dialog"
@@ -101,6 +107,8 @@
 
     @Prop({ default: true }) public isBackdropClickEnabled?: boolean;
 
+    @Prop({ default: true }) public isBottomSheetOnMobile?: boolean;
+
     @Ref('backdrop') public backdropElement: HTMLDivElement;
 
     public isActive: boolean = false;
@@ -174,8 +182,10 @@
     transition: opacity linear 100ms, visibility linear 100ms;
     will-change: opacity, visibility;
 
-    @include UiMediaMobile() {
-      justify-content: flex-end;
+    &_is-mobile-bottom-sheet {
+      @include UiMediaMobile() {
+        justify-content: flex-end;
+      }
     }
 
     &_is-active {
@@ -196,7 +206,7 @@
     flex-direction: column;
 
     max-height: 85vh;
-    max-width: 100vw;
+    max-width: 98vw;
     transform-origin: bottom;
 
     animation-fill-mode: both;
@@ -225,10 +235,14 @@
       height: 100%;
     }
 
-    @include UiMediaMobile() {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+    &_is-mobile-bottom-sheet {
+      @include UiMediaMobile() {
+        max-width: 100vw;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
+
 
     &__header {
       @include UiPadding(md);

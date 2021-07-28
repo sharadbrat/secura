@@ -156,11 +156,12 @@
       <UiDialog
         title="Import"
         ref="importDialog"
+        :isBottomSheetOnMobile="false"
         @primary-button-click="onImportConfirm()"
         @secondary-button-click="importEncryptionKey = ''; importedDataFromClipboard = ''"
       >
         <template slot="body">
-          <span class="settings-view__import-label" id="import-encryption-key">Encryption key</span>
+          <span class="settings-view__import-label" id="import-encryption-key">Encryption Key</span>
           <UiInput
             v-model="importEncryptionKey"
             placeholder="(can be empty)"
@@ -175,7 +176,7 @@
             :model="importOption"
             @change="importOption = importOptions.CLIPBOARD"
           >
-            Import copied text
+            Import Copied Text
           </UiRadio>
           <UiRadio
             class="settings-view__export-radio"
@@ -183,11 +184,11 @@
             :model="importOption"
             @change="importOption = importOptions.FILE"
           >
-            Import file
+            Import File
           </UiRadio>
 
           <div v-if="importOption === importOptions.FILE">
-            <span class="settings-view__import-label" id="data-file">Data file</span>
+            <span class="settings-view__import-label" id="data-file">Data File</span>
             <input
               class="settings-view__import-file"
               type="file"
@@ -211,11 +212,12 @@
       <UiDialog
         title="Export"
         ref="exportDialog"
+        :isBottomSheetOnMobile="false"
         @primary-button-click="onExportConfirm()"
         @secondary-button-click="importEncryptionKey = ''"
       >
         <template slot="body">
-          <span class="settings-view__import-label" id="export-encryption-key">Encryption key</span>
+          <span class="settings-view__import-label" id="export-encryption-key">Encryption Key</span>
           <UiInput
             v-model="importEncryptionKey"
             placeholder="(can be empty)"
@@ -230,7 +232,7 @@
             :model="importOption"
             @change="importOption = importOptions.CLIPBOARD"
           >
-            Export as text (copy to clipboard)
+            Export as Text (copy to clipboard)
           </UiRadio>
           <UiRadio
             class="settings-view__export-radio"
@@ -238,7 +240,7 @@
             :model="importOption"
             @change="importOption = importOptions.FILE"
           >
-            Export as file
+            Export as File
           </UiRadio>
         </template>
       </UiDialog>

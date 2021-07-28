@@ -3,6 +3,7 @@
     title="Setup master key"
     ref="dialog"
     :shouldCloseOnPrimaryButtonClick="false"
+    :isBottomSheetOnMobile="false"
     @primary-button-click="onConfirm"
   >
     <template slot="body">

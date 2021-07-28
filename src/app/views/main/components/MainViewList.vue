@@ -80,6 +80,7 @@
       title="Enter your master key"
       ref="keyDialog"
       :shouldCloseOnPrimaryButtonClick="false"
+      :isBottomSheetOnMobile="false"
       @primary-button-click="onKeyDialogConfirm()"
     >
       <template slot="body">
