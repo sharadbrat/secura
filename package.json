@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint --no-fix",
     "size": "npm run build && size-limit",
     "start": "npm run serve",
+    "start:prod": "npm run serve -- --mode production",
     "test": "npm run lint && vue-cli-service test:unit -- test --require test/setup.ts"
   },
   "dependencies": {
