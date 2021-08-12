@@ -6,6 +6,13 @@
       <UiLogo tag="span"/>
       <span class="changelog-view__version">{{appVersion}}</span>
 
+      <h2 class="changelog-view__heading">v0.4.4</h2>
+
+      <ul class="changelog-view__list">
+        <li class="changelog-view__list-item">Added FAQ section in about page.</li>
+        <li class="changelog-view__list-item">Small fixes to improve the UX on mobiles.</li>
+      </ul>
+
       <h2 class="changelog-view__heading">v0.4.3</h2>
 
       <ul class="changelog-view__list">

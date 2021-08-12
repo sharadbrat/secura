@@ -137,3 +137,9 @@ $font-weight: (
     text-decoration: underline;
   }
 }
+
+
+@mixin UiTypographyModifyMonospace {
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-weight: map_get($font-weight, bold);
+}
