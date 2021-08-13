@@ -19,6 +19,7 @@ module.exports = {
   pwa: {
     name: 'Secura',
     msTileColor: '#29b6f6',
+    themeColor: 'transparent',
     manifestOptions: {
       name: 'Secura',
       short_name: 'Secura',
@@ -26,7 +27,7 @@ module.exports = {
       description: 'Secura: Headless password manager',
       display: 'standalone',
       orientation: 'portrait',
-      theme_color: '#B2B2B2',
+      theme_color: '#transparent',
       background_color: '#29b6f6',
       icons: [
         {
