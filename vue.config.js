@@ -27,7 +27,7 @@ module.exports = {
       description: 'Secura: Headless password manager',
       display: 'standalone',
       orientation: 'portrait',
-      theme_color: '#transparent',
+      theme_color: 'transparent',
       background_color: '#29b6f6',
       icons: [
         {
