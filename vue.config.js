@@ -18,7 +18,6 @@ module.exports = {
   lintOnSave: 'warning',
   pwa: {
     name: 'Secura',
-    themeColor: '#B2B2B2',
     msTileColor: '#29b6f6',
     manifestOptions: {
       name: 'Secura',
