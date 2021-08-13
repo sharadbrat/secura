@@ -19,7 +19,7 @@ module.exports = {
   pwa: {
     name: 'Secura',
     msTileColor: '#29b6f6',
-    themeColor: 'transparent',
+    themeColor: null,
     manifestOptions: {
       name: 'Secura',
       short_name: 'Secura',
@@ -28,7 +28,6 @@ module.exports = {
       display: 'standalone',
       orientation: 'portrait',
       theme_color: 'transparent',
-      background_color: '#29b6f6',
       icons: [
         {
           src: 'assets/icons/icon-192x192.png',
